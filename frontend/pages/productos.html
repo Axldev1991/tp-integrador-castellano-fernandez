@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../css/global.css" rel="stylesheet" />
+    <link href="../css/productos.css" rel="stylesheet" />
+    <title>"No hay Polque" Store</title>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <a href="../index.html" class="logo-container">
+                <img src="../assets/img/logo_tienda.png" alt="logo no hay polque">
+            </a>
+        </div>
+
+        <ul class="enlaces">
+            <li class="enlace">
+                <a href="../index.html">
+                    <span>INICIO</span>
+                </a>
+            </li>
+
+            <li class="enlace">
+                <a href="../index.html">
+                    <span>PRODUCTOS</span>
+                </a>
+            </li>
+
+            <li class="enlace">
+                <a href="../index.html">
+                    <span>CARRITO</span>
+                </a>
+            </li>
+
+        </ul>
+    </header>
+
+    <h1 id="bienvenida"></h1>
+
+    <script>
+        const nombre = localStorage.getItem("nombreUsuario");
+
+        if (nombre) {
+            document.getElementById("bienvenida").textContent =
+                `Hola ${nombre}`;
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,92 @@
+body {
+    overflow: hidden;
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 97vh;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-image: url("../assets/img/background.jpg");
+    background-size: cover;
+}
+
+.header-logo > div {
+    width: 50vw;
+    padding: 0 3vw;
+}
+
+.header-logo img {
+    width: 40vw;
+    padding: 1vw;
+    background-color: #f6c042;
+    border-radius: 100%;
+}
+
+.header-bienvenido {
+    justify-content: center;
+}
+
+.header-bienvenido > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: "ZCOOL KuaiLe", sans-serif;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    border: 7px solid black;
+    width: 40vw;
+    border-radius: 30px;
+    background-color: rgba(246, 192, 66, 0.7);
+}
+
+
+.header-bienvenido h1 {
+    font-size: 4rem;
+    line-height: 50px;
+}
+
+.header-bienvenido h1 span{
+    font-size: 2rem;
+    font-weight: 100;
+}
+
+.header-bienvenido form {
+    display: flex;
+    align-items: center;
+}
+
+.header-bienvenido p {
+    font-size: 1.5rem;
+}
+
+.header-bienvenido input {
+    height: 20px;
+    margin-left: 10px;
+    margin-top: 5px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.header-bienvenido button {
+    background-color: rgba(246, 192, 66, 1);
+    border-radius: 5px;
+    border: 1px solid #b67f1a;
+    padding: 8px 15px;
+    margin-left: 10px;
+    margin-top: 5px;
+    transition: 0.2s ease-in-out;
+    cursor: pointer;
+    color: #6b4b10;
+    font-weight: bold;
+}
+
+.header-bienvenido button:hover {
+    background-color: #b67f1a;
+    color: rgba(246, 192, 66, 1);
+    transform: scale(1.05);
+}
+
