@@ -26,10 +26,10 @@ Este proyecto implementa un sistema de autoservicio interactivo de indumentaria 
 ```text
 ├── backend/                  # Servidor Express, API y Panel Admin
 │   ├── src/
-│   │   ├── api/
-│   │   │   ├── config/       # Variables de entorno
-│   │   │   └── database/     # Conexión y scripts de base de datos (schema.sql)
-│   │   └── views/            # Vistas EJS de administración
+│   │   └── api/
+│   │       ├── config/       # Variables de entorno
+│   │       └── database/     # Conexión y scripts de base de datos (schema.sql)
+│   ├── views/                # Vistas EJS de administración (fuera de src)
 │   ├── index.js              # Punto de entrada de Express
 │   └── package.json
 ├── frontend/                 # Interfaz estática del Kiosco (Cliente)
@@ -67,12 +67,16 @@ Tener un servidor local de **MySQL** o **MariaDB** instalado y corriendo en su s
    ```bash
    cd backend
    ```
-2. Instale las dependencias necesarias:
+2. Instale **pnpm** de forma global (si aún no lo tiene instalado):
    ```bash
-   npm install
+   npm install -g pnpm
    ```
-   *(También puede usar `pnpm install` o `yarn install` si los tiene instalados)*.
-3. Cree un archivo **`.env`** en la carpeta `backend/` basado en la siguiente configuración estándar:
+3. Instale las dependencias del proyecto:
+   ```bash
+   pnpm install
+   ```
+   *(Como alternativa clásica de fallback, también puede usar `npm install`)*.
+4. Cree un archivo **`.env`** en la carpeta `backend/` basado en la siguiente configuración estándar:
    ```env
    PORT=3000
    DB_HOST=127.0.0.1
