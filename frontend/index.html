@@ -1,16 +1,40 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="./css/styles.css" rel="stylesheet" />
-    <title>Document</title>
+    <link href="./css/global.css" rel="stylesheet" />
+    <link href="./css/index.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Press+Start+2P&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+    <title>"No hay Polque" Store</title>
 </head>
 
 <body>
-    <div>
-        <h1 class="titulo">Tienda e ameo</h1>
-    </div>
+
+    <header class="header-logo">
+        <div>
+            <img src="./assets/img/logo_tienda.png" />
+        </div>
+        <div class="header-bienvenido">
+            <div>
+                <h1><span>Bienvenido a</span></br>No hay polque</br><span>Store</span></h1>
+                <form id="formNombre">
+                    <p>Tu nombre, feo:</p>
+                    <input type="text" id="nombreUsuario">
+                    <button type="submit">Entrar</button>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    <footer>
+        <h3>By Axel Castellano - Saulo Fernández ™</h3>
+    </footer>
+
+    <script src="./js/carga_nombre.js"></script>
 </body>
 
 </html>
