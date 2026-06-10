@@ -15,7 +15,7 @@ Este documento detalla las tareas asignadas a Axel para el TP Integrador "Autose
 - [x] **2.2.** Diseño e inyección del archivo `schema.sql` (tablas productos, ventas, usuarios, ventas_productos).
 
 ## 🔐 Etapa 3: Back-Office Administrativo (Backend - EJS)
-- [ ] **3.1. Pantalla de Login (`/admin/login`)**:
+- [x] **3.1. Pantalla de Login (`/admin/login`)**:
   - Formulario de inicio de sesión con validación de credenciales en la base de datos.
   - Botón de Acceso Rápido para autocompletar usuario de prueba con un clic.
 - [ ] **3.3. Alta de Producto (`/admin/productos/nuevo`)**:

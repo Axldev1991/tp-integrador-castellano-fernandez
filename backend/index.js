@@ -1,13 +1,41 @@
+/*
+MIDDLEWARE: Es una función intermedia que se ejecuta en el servidor Express desde que llega la petición del cliente (request) hasta que se envía la respuesta final (response). Sirve para inspeccionar, transformar, validar o bloquear esa petición.
+
+- express: framework que nos ayuda a crear el servidor web. Se encarga de escuchar las peticiones del navegador (GET, POST), decidir qué función ejecutar según la URL, y enviarle la respuesta al cliente (un HTML renderizado, un JSON o una redirección).
+
+- cors: middleware de seguridad que permite que el frontend y el backend se comuniquen cuando están en diferentes puertos u orígenes (por ejemplo, si el cliente corre en el puerto 5173 y la API de Express en el 3000).
+
+- multer: middleware que recibe y procesa archivos binarios (como imágenes). Guarda el archivo en el disco y le pasa a Express la ruta de texto donde quedó guardado en req.file.
+*/
+
 import express from "express";
 import cors from "cors";
 import environments from "./src/api/config/environments.js";
 import connection from "./src/api/database/db.js";
 import session from "express-session";
 import bcrypt from "bcrypt";
+import multer from "multer";
+import path from "path";
+
 
 /*
-MIDDLEWARE: Es una función intermedia que se ejecuta en el servidor Express desde que llega la petición del cliente (request) hasta que se envía la respuesta final (response). Sirve para inspeccionar, transformar, validar o bloquear esa petición.
+- const storage: definimos las reglas para almacenarlo
+- const upload: el middleware que se encarga de capturar en el momento que un formulario envía una imagen
 */
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, "public/uploads/"); // Carpeta destino
+    },
+    filename: (req, file, cb) => {
+        // Generamos un nombre único: timestamp + extensión original (.jpg, .png, etc)
+        const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1E9);
+        cb(null, uniqueSuffix + path.extname(file.originalname));
+    }
+});
+
+// Inicializamos el middleware
+const upload = multer({ storage: storage });
+
 
 const app = express(); // guardamos el objeto express
 const PORT = environments.port; //guardamos el puerto desde environments
@@ -92,6 +120,36 @@ app.get("/admin/login", (req, res) => {
 });
 
 /*
+- Endpoint para mostrar el formulario de carga de un nuevo producto
+*/
+app.get("/admin/productos/nuevo", (req, res) => {
+    res.render("nuevo-producto");
+});
+
+/*
+- Endpoint para interceptar cuando enviamos un archivo al servidor.
+
+*/
+app.post("/admin/productos/nuevo", upload.single("imagen"), async (req, res) => {
+    try{
+        const {nombre, descripcion, precio, categoria} = req.body;
+        const imageUrl = `/uploads/${req.file.filename}`;
+
+        await connection.query(
+            "INSERT INTO productos (nombre, descripcion, precio, imagenUrl, categoria) VALUES (?, ?, ?, ?, ?)",
+            [nombre, descripcion, precio, imageUrl, categoria]
+        );
+
+        res.redirect("/admin/dashboard");
+
+
+    }catch(error){
+        console.log(error)
+    }
+});
+
+
+/*
 - endpoint en donde hacemos un post al servidor pidiendolé si el usuario existe en la DB, para eso desestructuramos el correo y la contraseña atrapadas con el middleware "express.urlencoded".
 - .query hace la petición a la base de datos, y nos devuelve todo el objeto usuario o undefined
 */
@@ -122,6 +180,8 @@ app.post("/admin/login", async (req, res) => {
         console.log(error);
     }
 });
+
+
 
 /*
 .listen: metodo de express que abre el puerto especificado en el servidor, y escucha cualquier conexion de red entrante
