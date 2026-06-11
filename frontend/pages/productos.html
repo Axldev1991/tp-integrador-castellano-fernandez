@@ -7,26 +7,33 @@
     <link href="../css/global.css" rel="stylesheet" />
     <link href="../css/productos.css" rel="stylesheet" />
     <title>"No hay Polque" Store</title>
+
+    <script>
+        (function() {
+            const nombreUsuario = localStorage.getItem("nombreUsuario");
+            if (!nombreUsuario) {
+                window.location.href = "../index.html";
+            }
+        })();
+    </script>
 </head>
 
 <body>
     <header>
         <div class="logo">
-            <a href="../index.html" class="logo-container">
-                <img src="../assets/img/logo_tienda.png" alt="logo no hay polque">
-            </a>
+            <img src="../assets/img/logo_tienda.png" alt="logo no hay polque">
         </div>
 
         <ul class="enlaces">
             <li class="enlace">
                 <a href="../index.html">
-                    <span>INICIO</span>
+                    <span>PRODUCTOS</span>
                 </a>
             </li>
 
             <li class="enlace">
                 <a href="../index.html">
-                    <span>PRODUCTOS</span>
+                    <span>OFERTAS</span>
                 </a>
             </li>
 
@@ -36,19 +43,136 @@
                 </a>
             </li>
 
+            <li class="enlace">
+                <button id="boton-salir">SALIR</button>
+            </li>
+
         </ul>
     </header>
 
-    <h1 id="bienvenida"></h1>
+    
+    <main>
+        
+        <section class="secccion-productos">
+            <h1 id="bienvenida"></h1>
+            <h2>Nuestros productos</h2>
+            <div id="contenedor-productos"></div>
+        </section>
+    </main>
+
+    <footer>
+        <h3>By Axel Castellano - Saulo Fernández ™</h3>
+    </footer>
 
     <script>
+        //Obtener nombre
         const nombre = localStorage.getItem("nombreUsuario");
 
         if (nombre) {
             document.getElementById("bienvenida").textContent =
                 `Hola ${nombre}`;
         }
+
+        //Obtener productos
+        const contenedorProductos = document.getElementById("contenedor-productos");
+
+        // const url = "http://localhost:3000/api/products/";
+
+        // async function obtenerProductos() {
+        //     try {
+
+        //         const response = await fetch(url);
+        //         const data = await response.json();
+                
+        //         const productos = data.payload;
+        //         console.log(productos);
+                
+        //         renderizarProductos(productos);
+
+        //     } catch (error) {
+        //         console.error(error);
+        //     }
+
+        // }
+
+        //PRODUCTOS PROVISORIOS
+        const productos = [
+            {
+                id: 1,
+                name: "Arrolladitos",
+                image:"../assets/img/productos/arrolladitos.jpg",
+                price: 1200
+            },
+            {
+                id: 2,
+                name: "Coca Cola",
+                image:"../assets/img/productos/cocacola.png",
+                price: 2400
+            },
+            {
+                id: 3,
+                name: "Gyozas",
+                image:"../assets/img/productos/gyozas.png",
+                price: 3500
+            },
+            {
+                id: 4,
+                name: "Hamburgesas",
+                image:"../assets/img/productos/hamburguesa-swift.png",
+                price: 1100
+            },
+            {
+                id: 5,
+                name: "Pan Lactal Bimbo",
+                image:"../assets/img/productos/pan-lactal.webp",
+                price: 2300
+            },
+            {
+                id: 6,
+                name: "Pan Lactal Lactal",
+                image:"../assets/img/productos/pan-lactal2.webp",
+                price: 2000
+            },
+            {
+                id: 7,
+                name: "Piedras Absorsol",
+                image:"../assets/img/productos/piedritas.png",
+                price: 1800
+            },
+            {
+                id: 8,
+                name: "Lavandina Ayudin",
+                image:"../assets/img/productos/lavandina.png",
+                price: 800
+            },
+        ]
+        //PRODUCTOS PROVISORIOS
+
+        function renderizarProductos(array) {
+            let htmlProductos = "";
+
+            array.forEach(producto => {
+                htmlProductos += `
+                    <div class="card-producto">
+                        <img src="${producto.image}" alt="${producto.name}">
+                        <h4>${producto.name}</h4>
+                        <p>Id: ${producto.id}</p>
+                        <p>$${producto.price}</p>
+                    </div>
+                `;
+            });
+
+            contenedorProductos.innerHTML = htmlProductos;
+        }
+
+        renderizarProductos(productos)
+
+        // obtenerProductos();
+
+
+        
     </script>
+    <script src="../js/productos.js"></script>
 
 </body>
 
