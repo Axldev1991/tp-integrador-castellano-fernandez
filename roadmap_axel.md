@@ -24,9 +24,9 @@ Este documento detalla las tareas asignadas a Axel para el TP Integrador "Autose
   - Interfaz de edición precargada con opción de actualizar la imagen.
 
 ## 📱 Etapa 4: Frontend del Cliente (Autoservicio)
-- [ ] **4.2.3. Gestión del Carrito**:
+- [x] **4.2.3. Gestión del Carrito**:
   - Lógica del carrito en JS (agregar, modificar cantidades, y eliminar).
-- [ ] **4.2.4. Confirmación de Compra**:
+- [x] **4.2.4. Confirmación de Compra**:
   - Modal de confirmación y envío de datos a la API (`POST /api/ventas`).
 - [ ] **4.2.5. Pantalla de Ticket**:
   - Mostrar detalle de lo comprado y botón para descargar el ticket en PDF.

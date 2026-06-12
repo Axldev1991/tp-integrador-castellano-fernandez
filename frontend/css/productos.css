@@ -41,3 +41,83 @@ header {
 .enlace a span {
     position: relative;
 }
+
+/* --- MODAL DE CONFIRMACIÓN (Respetando paleta de Saulo) --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(77, 50, 0, 0.5); /* Oscurecemos usando el tono marrón de Saulo */
+    backdrop-filter: blur(4px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-card {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(77, 50, 0, 0.15);
+    max-width: 420px;
+    width: 90%;
+    text-align: center;
+    font-family: "Nunito", sans-serif;
+    border: 2px solid rgba(246, 192, 66, 0.3); /* Borde suave en amarillo tienda */
+}
+
+.modal-card h2 {
+    margin-top: 0;
+    color: #4d3200; /* Marrón tienda */
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+.modal-card p {
+    color: #555;
+    margin-bottom: 25px;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.modal-card .btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-family: "Nunito", sans-serif;
+    font-weight: 800;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.modal-card .btn-confirm {
+    background-color: #f6c042; /* Amarillo marca */
+    color: #4d3200; /* Texto marrón */
+}
+
+.modal-card .btn-confirm:hover {
+    background-color: #e5b035;
+    transform: translateY(-1px);
+}
+
+.modal-card .btn-cancel {
+    background-color: #f4f4f4;
+    color: #777;
+    border: 1px solid #ddd;
+}
+
+.modal-card .btn-cancel:hover {
+    background-color: #eaeaea;
+    color: #333;
+}
+
