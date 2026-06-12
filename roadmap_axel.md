@@ -20,7 +20,7 @@ Este documento detalla las tareas asignadas a Axel para el TP Integrador "Autose
   - Botón de Acceso Rápido para autocompletar usuario de prueba con un clic.
 - [x] **3.3. Alta de Producto (`/admin/productos/nuevo`)**:
   - Formulario para cargar datos y subida de imagen física al servidor usando `multer`.
-- [ ] **3.3. Modificación de Producto (`/admin/productos/editar/:id`)**:
+- [x] **3.3. Modificación de Producto (`/admin/productos/editar/:id`)**:
   - Interfaz de edición precargada con opción de actualizar la imagen.
 
 ## 📱 Etapa 4: Frontend del Cliente (Autoservicio)

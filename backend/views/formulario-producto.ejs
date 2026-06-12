@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= producto ? 'Editar Producto' : 'Nuevo Producto' %> - Admin</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- R.2. Encabezado Obligatorio (Logo, Nombre, Integrantes y Nav) -->
+    <header class="header">
+        <div class="header-container">
+            <span class="logo">👕 UrbanStyle</span>
+            <span class="app-name">Autoservicio Kiosko</span>
+            <nav class="nav">
+                <a href="/">Ir al Kiosco</a>
+            </nav>
+            <span class="student-names">Axel Castellano & Saulo Fernández</span>
+        </div>
+    </header>
+    
+    <main class="login-container">
+        <div class="login-card">
+            <!-- Mostramos el título segun sea: CREAR o CARGAR un producto -->
+            <h1><%= producto ? 'Editar Producto' : 'Cargar Nuevo Producto' %></h1> 
+            <p class="subtitle">Back-Office Administrativo</p>
+
+            <!-- Mostramos el formulario vacío o con la información según sea CREAR o CARGAR -->
+            <form action="<%= producto ? '/admin/productos/editar/' + producto.id : '/admin/productos/nuevo' %>" method="POST" enctype="multipart/form-data" class="login-form">
+                
+                <div class="form-group">
+                    <label for="nombre">Nombre del Producto</label>
+                    <input type="text" id="nombre" name="nombre" value="<%= producto ? producto.nombre : '' %>" placeholder="Ej: Remera Classic" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="descripcion">Descripción</label>
+                    <textarea id="descripcion" name="descripcion" placeholder="Detalles del producto..." rows="3" required><%= producto ? producto.descripcion : '' %></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="precio">Precio</label>
+                    <input type="number" id="precio" name="precio" value="<%= producto ? producto.precio : '' %>" placeholder="0.00" step="0.01" min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="categoria">Categoría</label>
+                    <select id="categoria" name="categoria" required>
+                        <option value="" disabled selected>Seleccione una categoría</option>
+                        <option value="Remeras" <%= producto && producto.categoria === 'Remeras' ? 'selected' : '' %>>Remeras</option>
+                        <option value="Pantalones" <%= producto && producto.categoria === 'Pantalones' ? 'selected' : '' %>>Pantalones</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="imagen">Imagen del Producto</label>
+                    <% if (producto) { %>
+                        <div class="current-image-preview" style="margin-bottom: 10px;">
+                            <p style="font-size: 0.9rem; color: #666;">Imagen actual:</p>
+                            <img src="<%= producto.imagenUrl %>" alt="<%= producto.nombre %>" style="max-width: 150px; border-radius: 8px; border: 1px solid #ddd;">
+                        </div>
+                    <% } %>
+                    <input type="file" id="imagen" name="imagen" accept="image/*" <%= producto ? '' : 'required' %>>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    <%= producto ? 'Guardar Cambios' : 'Cargar Producto' %>
+                </button>
+
+            </form>
+        </div>
+    </main>
+</body>
+</html>
