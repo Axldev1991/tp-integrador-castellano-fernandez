@@ -1,48 +1,7 @@
-header {
-    height: 80px;
-    background-color: rgba(246, 192, 66, 0.95);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 40px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+.secccion-productos h1 {
+    font-family: "ZCOOL KuaiLe", sans-serif;
 }
 
-.logo img {
-    height: 60px;
-    transition: transform 0.3s ease;
-}
-
-.logo img:hover {
-    transform: scale(1.05);
-}
-
-.enlaces {
-    display: flex;
-    gap: 30px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.enlace a {
-    text-decoration: none;
-    color: #4d3200;
-    font-family: "Nunito", sans-serif;
-    font-weight: 800;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
-
-.enlace a:hover {
-    color: white;
-}
-
-.enlace a span {
-    position: relative;
-}
-
-/* Contenedores producto */
 .card-producto {
     display: flex;
     width: 170px;
@@ -57,6 +16,7 @@ header {
     border-radius: 5px;
     border: 3px solid #eb99a1;
     padding: 10px;
+    cursor: pointer;
 }
 
 .card-producto img {
@@ -73,7 +33,7 @@ header {
 
 #contenedor-productos {
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto auto auto auto;
     justify-content: space-around;
 }
 
@@ -81,4 +41,47 @@ header {
     margin-top: 20px;
     width: 100%;
     padding-left: 0;
+}
+
+.mira-ofertas-section {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+}
+
+.mira-ofertas {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    background-color: var(--amarillo-oscuro);
+    padding: 2px 30px;
+    border-radius: 50px;
+    color: #181818;
+    cursor: pointer;
+    height: 50px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.mira-ofertas:hover {
+    transform: scale(1.06);
+}
+
+.mira-ofertas-flecha {
+    position: relative;
+    width: 60px;
+    height: 50px;
+}
+
+.mira-ofertas-flecha div {
+    position: absolute;
+    padding: 15px 20px;
+    width: 30px;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+.mira-ofertas:hover .mira-ofertas-flecha div{
+    background-color: var(--amarillo-muy-oscuro);
+    transform: translateX(calc(18px));
 }

@@ -4,7 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Press+Start+2P&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
     <link href="../css/global.css" rel="stylesheet" />
+    <link href="../css/navbar.css" rel="stylesheet" />
     <link href="../css/productos.css" rel="stylesheet" />
     <title>"No hay Polque" Store</title>
 
@@ -19,58 +23,82 @@
 </head>
 
 <body>
-    <header>
-        <div class="logo">
-            <img src="../assets/img/logo_tienda.png" alt="logo no hay polque">
+    <div class="content">
+
+        <header>
+            <div class="logo">
+                <img src="../assets/img/logo_tienda.png" alt="logo no hay polque">
+            </div>
+            
+            <ul class="enlaces">
+                <li class="enlace">
+                    <a href="../index.html">
+                        <span>PRODUCTOS</span>
+                    </a>
+                </li>
+                
+                <li class="enlace">
+                    <a href="../index.html">
+                        <span>OFERTAS</span>
+                    </a>
+                </li>
+                
+                <li class="enlace">
+                    <a href="../index.html">
+                        <span>CARRITO</span>
+                    </a>
+                </li>
+                
+                <li class="enlace">
+                    <button id="boton-salir">SALIR</button>
+                </li>
+                
+            </ul>
+        </header>
+        
+        
+        <main>
+            <section class="secccion-productos">
+                <h1 id="bienvenida"></h1>
+                <h2>Elegi que queres llevar</h2>
+                <div id="contenedor-productos"></div>
+            </section>
+        </main>
+        
+        <div class="theme-button" id="themeToggle">
+            <div class="theme-container">
+                <div class="theme-circle" id="themeCircle">
+                    <div>
+                        <span class="icon-sun">☀️</span>
+                        <span class="icon-moon">🌙</span>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <ul class="enlaces">
-            <li class="enlace">
-                <a href="../index.html">
-                    <span>PRODUCTOS</span>
-                </a>
-            </li>
-
-            <li class="enlace">
-                <a href="../index.html">
-                    <span>OFERTAS</span>
-                </a>
-            </li>
-
-            <li class="enlace">
-                <a href="../index.html">
-                    <span>CARRITO</span>
-                </a>
-            </li>
-
-            <li class="enlace">
-                <button id="boton-salir">SALIR</button>
-            </li>
-
-        </ul>
-    </header>
-
-    
-    <main>
-        
-        <section class="secccion-productos">
-            <h1 id="bienvenida"></h1>
-            <h2>Nuestros productos</h2>
-            <div id="contenedor-productos"></div>
+        <section class="mira-ofertas-section">
+            <a href="./ofertas.html" class="mira-ofertas">
+                <div>
+                    <h3>Mira nuestras ofertas</h3>
+                </div>
+                <div class="mira-ofertas-flecha">
+                    <div>➜</div>
+                </div>
+            </a>
         </section>
-    </main>
-
-    <footer>
-        <h3>By Axel Castellano - Saulo Fernández ™</h3>
-    </footer>
-
-    <script>
-        //Obtener nombre
+        
+        <footer>
+            <h3>By Axel Castellano - Saulo Fernández ™</h3>
+        </footer>
+    </div>
+        
+        <script>
+            //Obtener nombre
         const nombre = localStorage.getItem("nombreUsuario");
 
         if (nombre) {
             document.getElementById("bienvenida").textContent =
-                `Hola ${nombre}`;
+                `HOLA ${nombre.toUpperCase()}`;
         }
 
         //Obtener productos
@@ -173,6 +201,7 @@
         
     </script>
     <script src="../js/productos.js"></script>
+    <script src="../js/theme.js"></script>
 
 </body>
 
