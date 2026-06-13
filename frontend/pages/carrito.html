@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Press+Start+2P&family=ZCOOL+KuaiLe&display=swap"
+        rel="stylesheet">
+    <link href="../css/global.css" rel="stylesheet" />
+    <link href="../css/navbar.css" rel="stylesheet" />
+    <link href="../css/productos.css" rel="stylesheet" />
+    <link href="../css/cards.css" rel="stylesheet" />
+    <link href="../css/carrito.css" rel="stylesheet" />
+    <title>"No hay Polque" Store - Carrito</title>
+
+    <script>
+        (function () {
+            const nombreUsuario = localStorage.getItem("nombreUsuario");
+            if (!nombreUsuario) {
+                window.location.href = "../index.html";
+            }
+        })();
+    </script>
+</head>
+
+<body>
+    <div class="content">
+
+        <header>
+            <div class="logo">
+                <img src="../assets/img/logo_tienda.png" alt="logo no hay polque">
+            </div>
+
+            <ul class="enlaces">
+                <li class="enlace">
+                    <a href="./productos.html">
+                        <span>PRODUCTOS</span>
+                    </a>
+                </li>
+
+                <li class="enlace">
+                    <a href="./ofertas.html">
+                        <span>OFERTAS</span>
+                    </a>
+                </li>
+
+                <li class="enlace">
+                    <a href="./carrito.html">
+                        <span>CARRITO</span>
+                    </a>
+                </li>
+
+                <li class="enlace">
+                    <button id="boton-salir">SALIR</button>
+                </li>
+
+            </ul>
+        </header>
+
+        <main>
+            <section class="seccion-carrito">
+                <div>
+                    <h1 id="bienvenida"></h1>
+                    <div class="seccion-carrito-banner" style="background-image: url('../assets/img/banner2.png')">
+                        <h2>Tu carrito de compras</h2>
+                    </div>
+                </div>
+                
+                <div id="contenedor-carrito"></div>
+                
+                <div class="carrito-resumen">
+                    <div class="carrito-total">
+                        <h3>TOTAL:</h3>
+                        <p id="total-precio">$0</p>
+                    </div>
+                    <button id="btn-finalizar-compra" class="btn-finalizar">Finalizar compra</button>
+                </div>
+            </section>
+        </main>
+
+        <div class="theme-button" id="themeToggle">
+            <div class="theme-container">
+                <div class="theme-circle" id="themeCircle">
+                    <div>
+                        <span class="icon-sun">☀️</span>
+                        <span class="icon-moon">🌙</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <h3>By Axel Castellano - Saulo Fernández ™</h3>
+        </footer>
+    </div>
+
+    <!-- Modal de Confirmación de Compra -->
+    <div id="modalConfirmacion" class="modal-overlay">
+        <div class="modal-card">
+            <h2>Confirmar Compra</h2>
+            <p>¿Estás seguro de que deseas finalizar tu compra?</p>
+            <div class="modal-buttons">
+                <button id="btnConfirmarSi" class="btn btn-confirm">Sí, confirmar</button>
+                <button id="btnConfirmarNo" class="btn btn-cancel">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Alerta / Error Personalizado -->
+    <div id="modalAlerta" class="modal-overlay">
+        <div class="modal-card">
+            <h2 id="alertaTitulo">Atención</h2>
+            <p id="alertaMensaje">Mensaje de la alerta.</p>
+            <div class="modal-buttons">
+                <button id="btnAlertaAceptar" class="btn btn-confirm">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+         //PRODUCTOS PROVISORIOS
+        const productos = [
+            {
+                id: 9,
+                name: "Pan fresco",
+                type: "oferta",
+                image: "../assets/img/productos/panhongo.jpeg",
+                price: 1200
+            },
+            {
+                id: 10,
+                name: "Hambur suelta",
+                type: "oferta",
+                image: "../assets/img/productos/hamburgueja.jpg",
+                price: 2400
+            },
+            {
+                id: 11,
+                name: "Tinta china",
+                type: "oferta",
+                image: "../assets/img/productos/soja.jpg",
+                price: 3500
+            },
+            {
+                id: 12,
+                name: "Pin Celeste",
+                type: "oferta",
+                image: "../assets/img/productos/pintura.jpg",
+                price: 1100
+            },
+            {
+                id: 13,
+                name: "C la pelota",
+                type: "oferta",
+                image: "../assets/img/productos/pelota.jpg",
+                price: 2300
+            },
+            {
+                id: 14,
+                name: "Prod Random",
+                type: "oferta",
+                image: "../assets/img/productos/random.jpg",
+                price: 2000
+            },
+            {
+                id: 15,
+                name: "Jamon...?",
+                type: "oferta",
+                image: "../assets/img/productos/jamon.webp",
+                price: 1800
+            },
+            {
+                id: 16,
+                name: "Hel sin enchufar",
+                type: "oferta",
+                image: "../assets/img/productos/heladera.webp",
+                price: 1200
+            },
+        ]
+        //PRODUCTOS PROVISORIOS
+        localStorage.setItem("carrito", JSON.stringify(productos));
+        const nombre = localStorage.getItem("nombreUsuario");
+        if (nombre) {
+            document.getElementById("bienvenida").textContent = `HOLA ${nombre.toUpperCase()}`;
+        }
+
+        let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+        function renderizarCarrito() {
+            const contenedorCarrito = document.getElementById("contenedor-carrito");
+            
+            if (carrito.length === 0) {
+                contenedorCarrito.innerHTML = `
+                    <div class="carrito-vacio">
+                        <p>🛒 Tu carrito está vacío</p>
+                        <a href="./productos.html" class="btn-seguir-comprando">Seguir comprando</a>
+                    </div>
+                `;
+                document.getElementById("total-precio").textContent = "$0";
+                return;
+            }
+
+            let htmlCarrito = "";
+            let total = 0;
+
+            carrito.forEach((producto, index) => {
+                total += producto.price;
+                htmlCarrito += `
+                    <div class="card-carrito" data-id="${producto.id}">
+                        <div class="card-carrito-img">
+                            <img src="${producto.image}" alt="${producto.name}">
+                        </div>
+                        <div class="card-carrito-info">
+                            <h3>${producto.name.toUpperCase()}</h3>
+                            <p>ID: ${producto.id}</p>
+                        </div>
+                        <div class="card-carrito-precio">
+                            <p>$${producto.price}</p>
+                        </div>
+                        <div class="card-carrito-eliminar">
+                            <button class="btn-eliminar" data-index="${index}">✖</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            contenedorCarrito.innerHTML = htmlCarrito;
+            document.getElementById("total-precio").textContent = `$${total}`;
+
+            document.querySelectorAll(".btn-eliminar").forEach(btn => {
+                btn.addEventListener("click", function() {
+                    const index = parseInt(this.getAttribute("data-index"));
+                    eliminarDelCarrito(index);
+                });
+            });
+        }
+
+        function eliminarDelCarrito(index) {
+            carrito.splice(index, 1);
+            localStorage.setItem("carrito", JSON.stringify(carrito));
+            renderizarCarrito();
+        }
+
+        function finalizarCompra() {
+            if (carrito.length === 0) {
+                mostrarAlerta("Carrito vacío", "No hay productos en tu carrito para finalizar la compra.");
+                return;
+            }
+            mostrarModalConfirmacion();
+        }
+
+        // Mostrar modal de confirmación
+        function mostrarModalConfirmacion() {
+            const modal = document.getElementById("modalConfirmacion");
+            modal.style.display = "flex";
+        }
+
+        // Cerrar modal de confirmación
+        function cerrarModalConfirmacion() {
+            const modal = document.getElementById("modalConfirmacion");
+            modal.style.display = "none";
+        }
+
+        // Confirmar compra
+        function confirmarCompra() {
+            carrito = [];
+            localStorage.setItem("carrito", JSON.stringify(carrito));
+            cerrarModalConfirmacion();
+            renderizarCarrito();
+            mostrarAlerta("Compra exitosa", "¡Gracias por tu compra! 🎉");
+        }
+
+        // Mostrar alerta personalizada
+        function mostrarAlerta(titulo, mensaje) {
+            document.getElementById("alertaTitulo").textContent = titulo;
+            document.getElementById("alertaMensaje").textContent = mensaje;
+            const modal = document.getElementById("modalAlerta");
+            modal.style.display = "flex";
+        }
+
+        function cerrarAlerta() {
+            const modal = document.getElementById("modalAlerta");
+            modal.style.display = "none";
+        }
+
+        // Event listeners
+        document.getElementById("btn-finalizar-compra")?.addEventListener("click", finalizarCompra);
+        document.getElementById("btnConfirmarSi")?.addEventListener("click", confirmarCompra);
+        document.getElementById("btnConfirmarNo")?.addEventListener("click", cerrarModalConfirmacion);
+        document.getElementById("btnAlertaAceptar")?.addEventListener("click", cerrarAlerta);
+
+        // Salir
+        document.getElementById("boton-salir")?.addEventListener("click", function() {
+            localStorage.removeItem("nombreUsuario");
+            window.location.href = "../index.html";
+        });
+
+        // Renderizar carrito al cargar la página
+        renderizarCarrito();
+    </script>
+    <script src="../js/theme.js"></script>
+</body>
+
+</html>

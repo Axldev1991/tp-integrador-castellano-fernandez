@@ -6,13 +6,15 @@
     --amarillo-claro: #f6c042;
     --amarillo-oscuro: #b67f1a;
     --amarillo-muy-oscuro: #885f14;
+    --filter: invert(10%) sepia(69%) saturate(867%) hue-rotate(191deg) brightness(90%) contrast(93%);
 }
 
 body.dark {
     --bg-color: #1a1a2e;
     --text-color: #eeeeee;
     --content-bg: #16213e;
-    --border-color: #0f3460;
+    --border-color: #133f75;
+    --filter: invert(47%) sepia(73%) saturate(639%) hue-rotate(3deg) brightness(95%) contrast(80%);
 }
 
 body {
@@ -23,6 +25,7 @@ body {
     background-color: var(--bg-color);
     color: var(--text-color);
     text-align: center;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
 }
 
 
@@ -122,6 +125,32 @@ body.dark .theme-circle .icon-moon {
 body.dark .theme-button {
     border-color: var(--amarillo-claro);
     background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* CARRITO */
+.carrito {
+    position: fixed;
+    top: 90px;
+    right: 10px;
+    border: 2px solid var(--amarillo-oscuro);
+    border-radius: 50px;
+    height: 60px;
+    width: 60px;
+    cursor: pointer;
+    background-color: var(--content-color);
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.carrito:hover {
+    transform: scale(1.1);
+}
+
+.carrito img {
+    width: 35px;
+    filter: var(--filter);
 }
 
 
