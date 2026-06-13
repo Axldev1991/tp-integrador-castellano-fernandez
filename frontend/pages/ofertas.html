@@ -6,14 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Press+Start+2P&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Press+Start+2P&family=ZCOOL+KuaiLe&display=swap"
+        rel="stylesheet">
     <link href="../css/global.css" rel="stylesheet" />
     <link href="../css/navbar.css" rel="stylesheet" />
     <link href="../css/productos.css" rel="stylesheet" />
+    <link href="../css/cards.css" rel="stylesheet" />
     <title>"No hay Polque" Store</title>
 
     <script>
-        (function() {
+        (function () {
             const nombreUsuario = localStorage.getItem("nombreUsuario");
             if (!nombreUsuario) {
                 window.location.href = "../index.html";
@@ -29,42 +32,54 @@
             <div class="logo">
                 <img src="../assets/img/logo_tienda.png" alt="logo no hay polque">
             </div>
-            
+
             <ul class="enlaces">
                 <li class="enlace">
-                    <a href="../index.html">
+                    <a href="./productos.html">
                         <span>PRODUCTOS</span>
                     </a>
                 </li>
-                
+
                 <li class="enlace">
-                    <a href="../index.html">
+                    <a href="./ofertas.html">
                         <span>OFERTAS</span>
                     </a>
                 </li>
-                
+
                 <li class="enlace">
-                    <a href="../index.html">
+                    <a href="./carrito.html">
                         <span>CARRITO</span>
                     </a>
                 </li>
-                
+
                 <li class="enlace">
                     <button id="boton-salir">SALIR</button>
                 </li>
-                
+
             </ul>
         </header>
-        
-        
+
+
         <main>
-            <section class="secccion-productos">
-                <h1 id="bienvenida"></h1>
-                <h2>Ofertas re locas!</h2>
+            <section class="seccion-productos">
+                <div>
+                    <h1 id="bienvenida"></h1>
+                    <div class="seccion-productos-banner" style="background-image: url('../assets/img/banner2.png')">
+                        <h2>¿Porque es tan barato?, no hay polque!</h2>
+                    </div>
+                </div>
                 <div id="contenedor-productos"></div>
             </section>
         </main>
-        
+
+
+        <section class="mira-ofertas-section">
+            <div>
+                <p>EXTREMADAMENTE CERCA DE VENCER NO ES VENCIDO</p>
+            </div>
+            </a>
+        </section>
+
         <div class="theme-button" id="themeToggle">
             <div class="theme-container">
                 <div class="theme-circle" id="themeCircle">
@@ -76,24 +91,40 @@
             </div>
         </div>
 
-        <section class="mira-ofertas-section">
-            <a href="./ofertas.html" class="mira-ofertas">
-                <div>
-                    <h3>Mira nuestras ofertas</h3>
-                </div>
-                <div class="mira-ofertas-flecha">
-                    <div>➜</div>
-                </div>
-            </a>
-        </section>
-        
+        <a href="./carrito.html" class="carrito" id="carritoToggle">
+            <img src="../assets/img/carrito.png" />
+        </a>
+
         <footer>
             <h3>By Axel Castellano - Saulo Fernández ™</h3>
         </footer>
     </div>
-        
-        <script>
-            //Obtener nombre
+
+    <!-- Modal de Confirmación de Compra -->
+    <div id="modalConfirmacion" class="modal-overlay">
+        <div class="modal-card">
+            <h2>Confirmar Compra</h2>
+            <p>¿Estás seguro de que deseas finalizar tu compra?</p>
+            <div class="modal-buttons">
+                <button id="btnConfirmarSi" class="btn btn-confirm">Sí, confirmar</button>
+                <button id="btnConfirmarNo" class="btn btn-cancel">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Alerta / Error Personalizado -->
+    <div id="modalAlerta" class="modal-overlay">
+        <div class="modal-card">
+            <h2 id="alertaTitulo">Atención</h2>
+            <p id="alertaMensaje">Mensaje de la alerta.</p>
+            <div class="modal-buttons">
+                <button id="btnAlertaAceptar" class="btn btn-confirm">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        //Obtener nombre
         const nombre = localStorage.getItem("nombreUsuario");
 
         if (nombre) {
@@ -111,10 +142,10 @@
 
         //         const response = await fetch(url);
         //         const data = await response.json();
-                
+
         //         const productos = data.payload;
         //         console.log(productos);
-                
+
         //         renderizarProductos(productos);
 
         //     } catch (error) {
@@ -126,52 +157,60 @@
         //PRODUCTOS PROVISORIOS
         const productos = [
             {
-                id: 1,
-                name: "Arrolladitos",
-                image:"../assets/img/productos/arrolladitos.jpg",
+                id: 9,
+                name: "Pan fresco",
+                type: "oferta",
+                image: "../assets/img/productos/panhongo.jpeg",
                 price: 1200
             },
             {
-                id: 2,
-                name: "Coca Cola",
-                image:"../assets/img/productos/cocacola.png",
+                id: 10,
+                name: "Hambur suelta",
+                type: "oferta",
+                image: "../assets/img/productos/hamburgueja.jpg",
                 price: 2400
             },
             {
-                id: 3,
-                name: "Gyozas",
-                image:"../assets/img/productos/gyozas.png",
+                id: 11,
+                name: "Tinta china",
+                type: "oferta",
+                image: "../assets/img/productos/soja.jpg",
                 price: 3500
             },
             {
-                id: 4,
-                name: "Hamburgesas",
-                image:"../assets/img/productos/hamburguesa-swift.png",
+                id: 12,
+                name: "Pin Celeste",
+                type: "oferta",
+                image: "../assets/img/productos/pintura.jpg",
                 price: 1100
             },
             {
-                id: 5,
-                name: "Pan Lactal Bimbo",
-                image:"../assets/img/productos/pan-lactal.webp",
+                id: 13,
+                name: "C la pelota",
+                type: "oferta",
+                image: "../assets/img/productos/pelota.jpg",
                 price: 2300
             },
             {
-                id: 6,
-                name: "Pan Lactal Lactal",
-                image:"../assets/img/productos/pan-lactal2.webp",
+                id: 14,
+                name: "Prod Random",
+                type: "oferta",
+                image: "../assets/img/productos/random.jpg",
                 price: 2000
             },
             {
-                id: 7,
-                name: "Piedras Absorsol",
-                image:"../assets/img/productos/piedritas.png",
+                id: 15,
+                name: "Jamon...?",
+                type: "oferta",
+                image: "../assets/img/productos/jamon.webp",
                 price: 1800
             },
             {
-                id: 8,
-                name: "Lavandina Ayudin",
-                image:"../assets/img/productos/lavandina.png",
-                price: 800
+                id: 16,
+                name: "Hel sin enchufar",
+                type: "oferta",
+                image: "../assets/img/productos/heladera.webp",
+                price: 1200
             },
         ]
         //PRODUCTOS PROVISORIOS
@@ -182,10 +221,16 @@
             array.forEach(producto => {
                 htmlProductos += `
                     <div class="card-producto">
-                        <img src="${producto.image}" alt="${producto.name}">
-                        <h4>${producto.name}</h4>
-                        <p>Id: ${producto.id}</p>
-                        <p>$${producto.price}</p>
+                        <div>
+                            <img src="${producto.image}" alt="${producto.name}">
+                        </div>
+                        <div class="card-producto-info">
+                            <div>
+                                <h3>${producto.name.toUpperCase()}</h4>
+                                <p>ID: ${producto.id}</p>
+                            </div>
+                            <p>$${producto.price}</p>
+                        </div>
                     </div>
                 `;
             });
@@ -198,11 +243,12 @@
         // obtenerProductos();
 
 
-        
+
     </script>
     <script src="../js/productos.js"></script>
     <script src="../js/theme.js"></script>
 
+    <script src="../js/carrito.js"></script>
 </body>
 
 </html>

@@ -1,40 +1,30 @@
-.secccion-productos h1 {
+.seccion-productos > div {
+    margin-bottom: 80px;
+}
+
+.seccion-productos h1 {
     font-family: "ZCOOL KuaiLe", sans-serif;
+    font-size: 40px;
 }
 
-.card-producto {
+.seccion-productos-banner {
+    background-image: url("../assets/img/banner.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
     display: flex;
-    width: 170px;
-    font-size: 10px;
-    flex-direction: column;
-    align-items: center;
-    height: 170px;
-    justify-content: space-between;
-    background-color: ghostwhite;
-    color: black;
-    margin-bottom: 25px;
-    border-radius: 5px;
-    border: 3px solid #eb99a1;
-    padding: 10px;
-    cursor: pointer;
+    justify-content: center;
 }
 
-.card-producto img {
-    width: 70px;
-}
-
-.card-producto h4, .card-producto p {
-    margin: 0;
-}
-
-.card-producto h4 {
-    font-size: 12px;
+.seccion-productos-banner h2 {
+    color: #333333;
 }
 
 #contenedor-productos {
     display: grid;
     grid-template-columns: auto auto auto auto;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 50px 80px;
 }
 
 #contenedor-productos ul {
@@ -53,7 +43,7 @@
     display: flex;
     gap: 30px;
     align-items: center;
-    background-color: var(--amarillo-oscuro);
+    background-color: var(--amarillo-claro);
     padding: 2px 30px;
     border-radius: 50px;
     color: #181818;
@@ -61,6 +51,7 @@
     height: 50px;
     transition: all 0.3s ease;
     text-decoration: none;
+    margin-top: -40px;
 }
 
 .mira-ofertas:hover {
@@ -82,7 +73,7 @@
 }
 
 .mira-ofertas:hover .mira-ofertas-flecha div{
-    background-color: var(--amarillo-muy-oscuro);
+    background-color: var(--amarillo-oscuro);
     transform: translateX(calc(18px));
 }
 
