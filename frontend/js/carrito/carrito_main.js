@@ -16,21 +16,6 @@ document.addEventListener("DOMContentLoaded", function() {
         btnFinalizar.addEventListener("click", finalizarCompra);
     }
     
-    const btnConfirmarSi = document.getElementById("btnConfirmarSi");
-    if (btnConfirmarSi) {
-        btnConfirmarSi.addEventListener("click", confirmarCompra);
-    }
-    
-    const btnConfirmarNo = document.getElementById("btnConfirmarNo");
-    if (btnConfirmarNo) {
-        btnConfirmarNo.addEventListener("click", cerrarModalConfirmacion);
-    }
-    
-    const btnAceptar = document.getElementById("btnAlertaAceptar");
-    if (btnAceptar) {
-        btnAceptar.addEventListener("click", cerrarAlerta);
-    }
-    
     const btnSalir = document.getElementById("boton-salir");
     if (btnSalir) {
         btnSalir.addEventListener("click", function() {

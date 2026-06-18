@@ -108,14 +108,14 @@ graph TD
 ## 🎓 Requerimientos Extra para Instancia de Examen Final
 
 ### 1. Adicionales del Cliente / Usuario [Responsable: Axel]
-- [ ] **E.1. Redirección a Encuesta Obligatoria:** Al finalizar la compra, luego de visualizar el ticket y presionar el botón "Salir", el sistema debe redirigir obligatoriamente a una **Pantalla de Encuesta**.
-- [ ] **E.2. Formulario de Encuesta Multiuso:** Debe recolectar la opinión del consumidor utilizando obligatoriamente al menos **5 tipos de input distintos**:
+- [x] **E.1. Redirección a Encuesta Obligatoria:** Al finalizar la compra, luego de visualizar el ticket y presionar el botón "Salir", el sistema debe redirigir obligatoriamente a una **Pantalla de Encuesta**.
+- [x] **E.2. Formulario de Encuesta Multiuso:** Debe recolectar la opinión del consumidor utilizando obligatoriamente al menos **5 tipos de input distintos**:
   1. `textarea`: Opinión de texto libre del cliente.
   2. `email`: Correo electrónico del cliente.
   3. `checkbox`: Pregunta booleana (ej. "¿Recomendaría el servicio?").
   4. `slider` (`range`): Puntuación otorgada al servicio (ej. de 1 a 10).
   5. `file`: Subida de archivo de imagen (ej. foto del local o del ticket físico) para almacenar en el servidor.
-- [ ] **E.3. Validación y Modales de Encuesta:**
+- [x] **E.3. Validación y Modales de Encuesta:**
   - Validar todos los datos recibidos con mensajes claros de error.
   - Ofrecer la opción de "Omitir" la encuesta con un botón visible pero no destacado visualmente.
   - Al completar correctamente, mostrar un **Modal de Agradecimiento** y persistir las respuestas en la base de datos junto con la fecha actual.

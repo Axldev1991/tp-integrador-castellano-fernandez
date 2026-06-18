@@ -7,10 +7,14 @@ function vaciarCarrito() {
 
 function finalizarCompra() {
     if (carrito.length === 0) {
-        mostrarAlerta("Carrito vacío", "No hay productos en tu carrito para finalizar la compra.");
+        window.mostrarAlerta("Carrito vacío", "No hay productos en tu carrito para finalizar la compra.");
         return;
     }
-    mostrarModalConfirmacion();
+    window.mostrarConfirmacion(
+        "Confirmar Compra",
+        "¿Estás seguro de que deseas finalizar tu compra?",
+        confirmarCompra
+    );
 }
 
 async function confirmarCompra() {
@@ -40,7 +44,6 @@ async function confirmarCompra() {
 
         if (!response.ok) throw new Error("Error al guardar la venta");
 
-        cerrarModalConfirmacion();
         localStorage.setItem("ultimoTicket", JSON.stringify(venta));
         vaciarCarrito();
         window.location.href = "./ticket.html";
@@ -48,6 +51,6 @@ async function confirmarCompra() {
         
     } catch (error) {
         console.error(error);
-        mostrarAlerta("Error", "No se pudo completar la compra. Intentá de nuevo.");
+        window.mostrarAlerta("Error", "No se pudo completar la compra. Intentá de nuevo.");
     }
 }

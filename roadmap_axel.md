@@ -41,8 +41,9 @@ Este documento detalla las tareas asignadas a Axel para el TP Integrador "Autose
 
 
 ## 🎓 Requerimientos de Final (Adicionales)
-- [ ] **E.1.** Redirección obligatoria a Encuesta al hacer clic en Salir del ticket.
-- [ ] **E.2.** Formulario de Encuesta con 5 tipos de inputs (textarea, email, checkbox, slider, file).
-- [ ] **E.3.** Validaciones de encuesta, opción "Omitir", modal de agradecimiento e inserción en base de datos.
+- [x] **E.1.** Redirección obligatoria a Encuesta al hacer clic en Salir del ticket.
+- [x] **E.2.** Formulario de Encuesta con 5 tipos de inputs (textarea, email, checkbox, slider, file).
+- [x] **E.3.** Validaciones de encuesta, opción "Omitir", modal de agradecimiento e inserción en base de datos.
 - [ ] **E.4.** Pantalla de Detalle de Producto por ID (`/productos/:id`).
+
 

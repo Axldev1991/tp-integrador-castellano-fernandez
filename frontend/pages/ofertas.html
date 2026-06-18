@@ -101,56 +101,7 @@
         </footer>
     </div>
 
-    <!-- Modal de Confirmación de Compra -->
-    <div id="modalConfirmacion" class="modal-overlay">
-        <div class="modal-card">
-            <h2>Confirmar Compra</h2>
-            <p>¿Estás seguro de que deseas finalizar tu compra?</p>
-            <div class="modal-buttons">
-                <button id="btnConfirmarSi" class="btn btn-confirm">Sí, confirmar</button>
-                <button id="btnConfirmarNo" class="btn btn-cancel">Cancelar</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal de Alerta / Error Personalizado -->
-    <div id="modalAlerta" class="modal-overlay">
-        <div class="modal-card">
-            <h2 id="alertaTitulo">Atención</h2>
-            <p id="alertaMensaje">Mensaje de la alerta.</p>
-            <div class="modal-buttons">
-                <button id="btnAlertaAceptar" class="btn btn-confirm">Aceptar</button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // const url = "http://localhost:3000/api/products/";
-
-        // async function obtenerProductos() {
-        //     try {
-
-        //         const response = await fetch(url);
-        //         const data = await response.json();
-
-        //         const productos = data.payload;
-        //         console.log(productos);
-
-        //         renderizarProductos(productos);
-
-        //     } catch (error) {
-        //         console.error(error);
-        //     }
-
-        // }
-
-
-
-        // obtenerProductos();
-
-
-
-    </script>
+    <script src="../js/ui/load_components.js"></script>
     <script src="../js/ui/theme.js"></script>
     <script src="../js/sesion.js"></script>
     <script src="../js/producto_oferta/agregar_carrito.js"></script>
