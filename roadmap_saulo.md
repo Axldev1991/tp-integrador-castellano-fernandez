@@ -26,6 +26,7 @@ Este documento detalla las tareas asignadas a Saulo para el TP Integrador "Autos
   - Botón para descargar el historial de ventas en formato `.xlsx` usando la librería `xlsx`.
 
 ## 📱 Etapa 4: Frontend del Cliente (Autoservicio)
+- [ ] **Favicon:** Configurar el favicon de la marca (favicon.ico / logo_tienda.png) en todas las cabeceras HTML para cumplir con la restricción obligatoria R.1 del PDF.
 - [x] **4.1. Estilos y Temas**:
   - CSS moderno con variables para Tema Claro y Oscuro.
   - Switch de cambio de tema con persistencia en `localStorage`.
