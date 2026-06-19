@@ -1,5 +1,6 @@
-import connection from "../database/db.js";
 import bcrypt from "bcrypt";
+import userModels from "../models/userModels.js";
+import productModels from "../models/productModels.js";
 
 /*
 - endpoint para cargar en formato HTML el login de usuario
@@ -17,8 +18,8 @@ export const postLogin = async (req, res) => {
     const { correo, contrasena } = req.body;
 
     try {
-        const [rows] = await connection.query("SELECT * FROM usuarios WHERE correo = ?", [correo]);
-        const usuario = rows[0];
+        const usuario = await userModels.getUsuarioEmail(correo);
+        
         if (usuario === undefined) {
             return res.render("login", { error: "El correo electrónico no existe." }); //renderizamos en la misma página el error porque el usuario ingresado no existe
         } else if (usuario) {
@@ -45,7 +46,7 @@ endpoint TEMPORAL para mostrar el dashboard
 */
 export const getDashboard = async (req, res) => {
     try{
-        const [productos] = await connection.query("SELECT id, nombre, precio FROM productos");
+        const productos = await productModels.getProductosDashboard();
 
         // Armamos un HTML básico
         let html = "<h1>Dashboard Temporal (Axel & Saulo)</h1>";
@@ -87,10 +88,7 @@ export const postNuevoProducto = async (req, res) => {
         const { nombre, descripcion, precio, categoria } = req.body;
         const imageUrl = `/uploads/${req.file.filename}`;
 
-        await connection.query(
-            "INSERT INTO productos (nombre, descripcion, precio, imagenUrl, categoria) VALUES (?, ?, ?, ?, ?)",
-            [nombre, descripcion, precio, imageUrl, categoria]
-        );
+        await productModels.postNuevoProducto({ nombre, descripcion, precio, imageUrl, categoria });
 
         res.redirect("/admin/dashboard");
     } catch (error) {
@@ -103,8 +101,7 @@ export const postNuevoProducto = async (req, res) => {
 export const getEditarProducto = async (req, res) => {
     const id = req.id;
     try {
-        const [rows] = await connection.query("SELECT * FROM productos WHERE id = ?", [id]);
-        const producto = rows[0];
+        const producto = await productModels.getProductoIdAdmin(id);
         if (!producto) {
             // Si no existe, redirigimos
             return res.redirect("/admin/dashboard");
@@ -123,23 +120,11 @@ Endpoint para enviar al servidor los datos de la edición del producto
 export const postEditarProducto = async (req, res) => {
     const id = req.id;
     const { nombre, descripcion, precio, categoria } = req.body;
+    const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
 
     try {
-        if (req.file) {
-            // Si sube una nueva imagen
-            const imageUrl = `/uploads/${req.file.filename}`;
-            await connection.query(
-                "UPDATE productos SET nombre = ?, descripcion = ?, precio = ?, categoria = ?, imagenUrl = ? WHERE id = ?",
-                [nombre, descripcion, precio, imageUrl, categoria, id]
-            );
-        } else {
-            // Se mantiene la imagen anterior
-            await connection.query(
-                "UPDATE productos SET nombre = ?, descripcion = ?, precio = ?, categoria = ? WHERE id = ?",
-                [nombre, descripcion, precio, categoria, id]
-            );
-        }
-
+        await productModels.actualizarProducto({nombre, descripcion, precio, imageUrl, categoria, id});
+        
         res.redirect("/admin/dashboard");
     } catch (error) {
         console.error("Error al actualizar el producto:", error);
