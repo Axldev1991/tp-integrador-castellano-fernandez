@@ -47,3 +47,8 @@ Este documento detalla las tareas asignadas a Saulo para el TP Integrador "Autos
 - [ ] **E.9. Descarga de Encuestas**:
   - Botón para exportar todas las encuestas respondidas a formato `.xlsx`.
 
+## ⚡ Modularización y Limpieza (Completado por Saulo)
+- [x] **M.1. Modularización de la API Cliente:** Dividir el controlador gigante y las rutas en archivos separados por recurso (productos, ventas, encuestas) para mejorar la escalabilidad del backend.
+- [x] **M.2. Modularización del Layout del Frontend:** Separar las cabeceras, pies de página y lógica de sesión en archivos reusables (`load_components.js` y `verificar_sesion.js`) y limpiar las páginas HTML.
+
+

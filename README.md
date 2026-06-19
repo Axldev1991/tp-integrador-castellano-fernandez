@@ -28,7 +28,11 @@ Este proyecto implementa un sistema de autoservicio interactivo de indumentaria 
 │   ├── src/
 │   │   └── api/
 │   │       ├── config/       # Variables de entorno
-│   │       └── database/     # Conexión y scripts de base de datos (schema.sql)
+│   │       ├── controllers/  # Controladores (lógica de negocio HTTP)
+│   │       ├── database/     # Conexión y scripts de base de datos (schema.sql)
+│   │       ├── middlewares/  # Middlewares (autenticación, validación)
+│   │       ├── models/       # Modelos de datos (consultas SQL aisladas)
+│   │       └── routes/       # Definición de rutas modularizadas
 │   ├── views/                # Vistas EJS de administración (fuera de src)
 │   ├── index.js              # Punto de entrada de Express
 │   └── package.json

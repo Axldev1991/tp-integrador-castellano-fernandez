@@ -51,6 +51,10 @@ Este documento detalla las tareas asignadas a Axel para el TP Integrador "Autose
 - [x] **O.2. Middleware de validación de IDs (`validateId`):** Implementar un middleware que limpie y valide que los IDs recibidos en los parámetros de ruta sean números enteros positivos antes de consultar la base de datos, retornando `400 Bad Request` si no lo son.
 - [x] **O.3. Estandarización de respuestas con `payload`:** Envolver las respuestas JSON del backend que devuelven colecciones o recursos bajo la propiedad `payload` (para alinearse con el formato del profe y su bitácora).
 
+## 🏛️ Refactorización Arquitectónica (Patrón MVC - Pendiente)
+- [x] **R.1. Separación de la Capa de Modelos (Models):** Extraer todas las consultas SQL directas (`connection.query`) de los controladores (`apiController.js` y `adminController.js`) hacia sus respectivos modelos dentro de `src/api/models/` para cumplir con el Principio de Responsabilidad Única (SRP).
+
+
 
   - *Lugares a modificar en el Backend:*
     - [apiController.js:L20](file:///home/axel/Escritorio/UTN/programacion3-tpIntegrador/backend/src/api/controllers/apiController.js#L20) en `getProductos` (cambiar `res.json(productosMapeados)` por `{ payload: productosMapeados, total: productosMapeados.length }`).
