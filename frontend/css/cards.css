@@ -93,3 +93,52 @@
     letter-spacing: 1px;
     font-size: 19px;
 }
+
+/* --- OVERLAY PARA VER DETALLE (PREMIUM STYLE) --- */
+.card-producto-imagen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 160px;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(77, 50, 0, 0.4); /* Tono marrón traslúcido */
+    backdrop-filter: blur(2px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.card-producto:hover .card-overlay {
+    opacity: 1;
+}
+
+.btn-card-detalle {
+    background-color: #f6c042; /* Amarillo marca */
+    color: #4d3200; /* Texto marrón oscuro */
+    border: none;
+    border-radius: 20px;
+    padding: 8px 18px;
+    font-family: "Nunito", sans-serif;
+    font-weight: 800;
+    font-size: 0.9rem;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.btn-card-detalle:hover {
+    transform: scale(1.08);
+    background-color: #e5b035;
+}

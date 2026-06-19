@@ -2,12 +2,12 @@ async function cargarComponentesComunes() {
     const headerElement = document.querySelector("header:not(.header-logo)");
     const footerElement = document.querySelector("footer");
 
-    // Detectamos si estamos en una subcarpeta (pages/) o en la raíz
+    // Detectamos si estamos en una subcarpeta (pages/, productos/) o en la raíz
     const path = window.location.pathname;
-    const esSubcarpeta = path.includes("/pages/");
+    const esSubcarpeta = path.includes("/pages/") || path.includes("/productos/");
     
     // Si estamos en la raíz (index.html), los recursos están en ./
-    // Si estamos en pages/, los recursos están en ../
+    // Si estamos en pages/ o productos/, los recursos están en ../
     const basePath = esSubcarpeta ? "../" : "./";
     const pagesPath = esSubcarpeta ? "./" : "./pages/";
     

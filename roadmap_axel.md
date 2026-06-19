@@ -44,7 +44,7 @@ Este documento detalla las tareas asignadas a Axel para el TP Integrador "Autose
 - [x] **E.1.** Redirección obligatoria a Encuesta al hacer clic en Salir del ticket.
 - [x] **E.2.** Formulario de Encuesta con 5 tipos de inputs (textarea, email, checkbox, slider, file).
 - [x] **E.3.** Validaciones de encuesta, opción "Omitir", modal de agradecimiento e inserción en base de datos.
-- [ ] **E.4.** Pantalla de Detalle de Producto por ID (`/productos/:id`).
+- [x] **E.4.** Pantalla de Detalle de Producto por ID (`/productos/:id`).
 
 ## ⚡ Optimizaciones de la Cátedra (Pendientes)
 - [x] **O.1. Limitar campos en consultas SQL:** Reemplazar los `SELECT *` por la selección explícita de campos (`SELECT id, nombre, precio...`) en las consultas de la API y de administración para cuidar el ancho de banda y memoria.

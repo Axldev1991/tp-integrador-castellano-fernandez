@@ -13,6 +13,9 @@ import connection from "./src/api/database/db.js";
 import session from "express-session";
 import adminRouter from "./src/api/routes/adminRoutes.js";
 import apiRouter from "./src/api/routes/apiRoutes.js";
+import path from "path";
+import { validateID } from "./src/api/middlewares/validateId.js";
+
 
 const app = express(); // guardamos el objeto express
 const PORT = environments.port; //guardamos el puerto desde environments
@@ -94,6 +97,12 @@ app.use("/admin", adminRouter);
 
 //Rutas de nuestra API
 app.use("/api", apiRouter);
+
+// Ruta para la página de detalle del producto
+app.get("/productos/:id", validateID, (req, res) => {
+    res.sendFile(path.resolve("../frontend/pages/detalle.html")); // la ruta correcta del archivo
+});
+
 
 /*
 .listen: metodo de express que abre el puerto especificado en el servidor, y escucha cualquier conexion de red entrante

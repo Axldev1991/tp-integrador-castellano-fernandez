@@ -23,8 +23,8 @@ export const getProductos = async (req, res) => {
         });
         
     }catch(error){
-        res.status(500).json({error: error.message})
-        console.log(error)
+        console.error("Error obteniendo productos:", error);
+        res.status(500).json({error: error.message});
     }
 }
 
@@ -57,8 +57,8 @@ export const postVenta = async (req, res) => {
 
     }catch(error){
         await conn.rollback(); //esto vuelve para atrás todos los insert "temporales" del bloque try, si es que tuvimos algún error con la conexión
+        console.error("Error al registrar venta:", error);
         res.status(500).json({error: error.message});
-        console.log(error);
     }finally{
         conn.release()//devuelve la conexion exclusiva del pool del conexiones de la DB
     }
@@ -91,7 +91,39 @@ export const postEncuesta = async (req, res) => {
         });
 
     }catch(error){
-        console.log(error)
+        console.error("Error al guardar encuesta:", error);
         res.status(500).json({error: error.message});
     }
 }
+
+export const getProdDescripcion = async (req, res) => {
+    const id = req.id;
+    const activo = true;
+    
+    try{
+        const [rows] = await connection.query("SELECT id, nombre, descripcion, precio, imagenUrl, categoria FROM productos WHERE id = ? AND activo = ?", [id,activo]);
+
+        if(rows.length === 0){
+            return res.status(404).json({error: "No existe el producto"});
+        }
+
+        const prod = rows[0];
+
+        const productoMapeado = {
+            id: prod.id,
+            name: prod.nombre,
+            description: prod.descripcion,
+            price: parseFloat(prod.precio),
+            image: prod.imagenUrl.startsWith('http') ? prod.imagenUrl : `http://localhost:3000${prod.imagenUrl}`,
+            category: prod.categoria
+        };
+
+        return res.json({payload: productoMapeado});
+
+    }catch(error){
+        console.error(error);
+        res.status(500).json({ error: error.message })
+    }
+
+
+};

@@ -35,7 +35,7 @@ export const postLogin = async (req, res) => {
             res.redirect("/admin/dashboard");
         }
     } catch (error) {
-        console.log(error);
+        console.error("Error en login:", error);
         res.status(500).send("Error interno del servidor");
     }
 };
@@ -94,7 +94,7 @@ export const postNuevoProducto = async (req, res) => {
 
         res.redirect("/admin/dashboard");
     } catch (error) {
-        console.log(error);
+        console.error("Error al crear producto nuevo:", error);
         res.status(500).send("Error interno al crear el producto");
     }
 };
