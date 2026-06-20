@@ -1,3 +1,4 @@
+// routes/admin.routes.js
 import express from "express";
 import { 
     getLogin, 
@@ -8,29 +9,32 @@ import {
     postNuevoProducto, 
     getEditarProducto, 
     postEditarProducto,
-    getDashboard
+    getDashboard,
+    getHistorialVentas,
+    toggleProducto
 } from "../controllers/admin.controllers.js";
 import { upload } from "../middlewares/upload.js";
-import { validateID } from "../middlewares/validateId.js";
+import { validateLogin, validateRegister, validateProduct, validateID } from "../middlewares/validators.js";
+import { isAuthenticated } from "../middlewares/auth.js";
+import { exportarVentasExcel } from "../controllers/ventas.controllers.js";
 
 const router = express.Router();
 
-// Ruta de Login
+// Rutas públicas (sin autenticación)
 router.get("/login", getLogin);
-router.post("/login", postLogin);
-
-// Ruta de Register
+router.post("/login", validateLogin, postLogin);
 router.get("/register", getRegister);
-router.post("/register", postRegister);
+router.post("/register", validateRegister, postRegister);
 
-// Ruta de Dashboard
-router.get("/dashboard", getDashboard);
+// Rutas protegidas (requieren autenticación)
+router.get("/dashboard", isAuthenticated, getDashboard);
+router.get("/ventas", isAuthenticated, getHistorialVentas);
+router.get("/productos/nuevo", isAuthenticated, getNuevoProducto);
+router.post("/productos/nuevo", isAuthenticated, upload.single("imagen"), validateProduct, postNuevoProducto);
+router.get("/productos/editar/:id", isAuthenticated, validateID, getEditarProducto);
+router.post("/productos/editar/:id", isAuthenticated, validateID, upload.single("imagen"), validateProduct, postEditarProducto);
+router.post("/productos/toggle/:id", isAuthenticated, validateID, toggleProducto);
 
-// Rutas de ABM Productos
-router.get("/productos/nuevo", getNuevoProducto);
-router.post("/productos/nuevo", upload.single("imagen"), postNuevoProducto);
-
-router.get("/productos/editar/:id", validateID, getEditarProducto);
-router.post("/productos/editar/:id", validateID, upload.single("imagen"), postEditarProducto);
+router.get("/ventas/exportar", isAuthenticated, exportarVentasExcel); 
 
 export default router;

@@ -13,7 +13,7 @@ import connection from "./src/api/database/db.js";
 import session from "express-session";
 import path from "path";
 
-import { validateID } from "./src/api/middlewares/validateId.js";
+import { validateID } from "./src/api/middlewares/validators.js";
 
 import adminRoutes from "./src/api/routes/admin.routes.js";
 import productosRoutes from "./src/api/routes/productos.routes.js";

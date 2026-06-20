@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Administración</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <span class="logo">👕 UrbanStyle</span>
+            <span class="app-name">Autoservicio Kiosko</span>
+            <nav class="nav">
+                <a href="/admin/dashboard">Dashboard</a>
+                <a href="/admin/ventas">Ventas</a>
+                <a href="/admin/productos/nuevo">+ Producto</a>
+                <a href="/admin/login" onclick="return confirm('¿Cerrar sesión?')">Salir</a>
+            </nav>
+            <span class="student-names">Axel Castellano & Saulo Fernández</span>
+        </div>
+    </header>
+
+    <main class="dashboard-container">
+        <!-- Header del Dashboard -->
+        <div class="dashboard-header">
+            <div>
+                <h1>📊 Dashboard</h1>
+                <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                    Bienvenido, <strong style="color: var(--text-primary);">
+                        <%= usuario ? usuario.correo : 'Administrador' %>
+                    </strong>
+                </p>
+            </div>
+            <a href="/admin/productos/nuevo" class="btn-nuevo-producto">
+                ➕ Nuevo Producto
+            </a>
+        </div>
+
+        <!-- Estadísticas -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number"><%= stats.total %></div>
+                <div class="stat-label">Total Productos</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number"><%= stats.activos %></div>
+                <div class="stat-label">Activos</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number"><%= stats.inactivos %></div>
+                <div class="stat-label">Inactivos</div>
+            </div>
+        </div>
+
+        <!-- Tabla de Productos -->
+        <div class="tabla-container">
+            <% if (productosAgrupados && Object.keys(productosAgrupados).length > 0) { %>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Descripción</th>
+                            <th>Precio</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% Object.entries(productosAgrupados).forEach(([categoria, productos]) => { %>
+                            <tr class="categoria-header">
+                                <td colspan="5">
+                                    <span style="display: flex; align-items: center; gap: 8px;">
+                                        <span style="font-size: 1.2rem;">
+                                            <% if (categoria === 'Remeras') { %>👕
+                                            <% } else if (categoria === 'Pantalones') { %>👖
+                                            <% } else { %>📦
+                                            <% } %>
+                                        </span>
+                                        <%= categoria %>
+                                        <span style="font-size: 0.8rem; color: var(--text-secondary); font-weight: 400;">
+                                            (<%= productos.length %>)
+                                        </span>
+                                    </span>
+                                </td>
+                            </tr>
+                            
+                            <% productos.forEach(prod => { %>
+                                <tr>
+                                    <td>
+                                        <strong><%= prod.nombre %></strong>
+                                        <br>
+                                        <span style="font-size: 0.8rem; color: var(--text-secondary);">
+                                            ID: #<%= prod.id %>
+                                        </span>
+                                    </td>
+                                    <td style="font-size: 0.9rem; color: var(--text-secondary);">
+                                        <%= prod.descripcion ? prod.descripcion.substring(0, 60) + (prod.descripcion.length > 60 ? '...' : '') : 'Sin descripción' %>
+                                    </td>
+                                    <td style="font-weight: 600; color: var(--primary-color);">
+                                        $<%= parseFloat(prod.precio).toFixed(2) %>
+                                    </td>
+                                    <td>
+                                        <span class="badge <%= prod.activo ? 'badge-activo' : 'badge-inactivo' %>">
+                                            <%= prod.activo ? '✅ Activo' : '❌ Inactivo' %>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="acciones">
+                                            <!-- Botón toggle con modal -->
+                                            <button type="button" 
+                                                    class="btn-toggle <%= prod.activo ? 'desactivar' : 'activar' %>"
+                                                    onclick="mostrarModalToggle(<%= prod.id %>, '<%= prod.nombre %>', <%= prod.activo %>)">
+                                                <%= prod.activo ? '🔴 Desactivar' : '🟢 Activar' %>
+                                            </button>
+                                            
+                                            <a href="/admin/productos/editar/<%= prod.id %>" class="editar">✏️ Editar</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        <% }) %>
+                    </tbody>
+                </table>
+            <% } else { %>
+                <div class="text-center">
+                    <p style="font-size: 1.1rem;">📭 No hay productos cargados</p>
+                    <p style="font-size: 0.9rem; margin-top: 8px; color: var(--text-secondary);">
+                        <a href="/admin/productos/nuevo" style="color: var(--primary-color);">Agregá tu primer producto</a>
+                    </p>
+                </div>
+            <% } %>
+        </div>
+    </main>
+
+    <!-- ============================================ -->
+    <!-- 🟢 MODAL DE CONFIRMACIÓN PARA TOGGLE -->
+    <!-- ============================================ -->
+    <div id="modalToggle" class="modal-overlay" style="display: none;">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2 id="modalToggleTitulo">Confirmar acción</h2>
+                <button class="modal-close" onclick="cerrarModalToggle()">✕</button>
+            </div>
+            <div class="modal-body">
+                <p id="modalToggleMensaje">¿Estás seguro de que deseas cambiar el estado de este producto?</p>
+                <p id="modalToggleProducto" style="font-weight: 600; color: var(--primary-color); margin-top: 8px;"></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="cerrarModalToggle()">Cancelar</button>
+                <form id="formToggle" method="POST" style="display: inline;">
+                    <button type="submit" class="btn btn-primary" id="btnToggleConfirmar">Confirmar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let productoIdActual = null;
+        let accionActual = null;
+
+        function mostrarModalToggle(id, nombre, activo) {
+            productoIdActual = id;
+            accionActual = activo ? 'desactivar' : 'activar';
+            
+            const modal = document.getElementById('modalToggle');
+            const titulo = document.getElementById('modalToggleTitulo');
+            const mensaje = document.getElementById('modalToggleMensaje');
+            const productoInfo = document.getElementById('modalToggleProducto');
+            const btnConfirmar = document.getElementById('btnToggleConfirmar');
+            const form = document.getElementById('formToggle');
+            
+            // Configurar el modal según la acción
+            if (activo) {
+                titulo.textContent = '⚠️ Desactivar Producto';
+                mensaje.textContent = '¿Estás seguro de que deseas desactivar este producto?';
+                productoInfo.textContent = `"${nombre}" (ID: #${id})`;
+                btnConfirmar.textContent = 'Desactivar';
+                btnConfirmar.className = 'btn btn-primary danger';
+            } else {
+                titulo.textContent = '✅ Activar Producto';
+                mensaje.textContent = '¿Estás seguro de que deseas activar este producto?';
+                productoInfo.textContent = `"${nombre}" (ID: #${id})`;
+                btnConfirmar.textContent = 'Activar';
+                btnConfirmar.className = 'btn btn-primary';
+            }
+            
+            // Configurar el action del formulario
+            form.action = `/admin/productos/toggle/${id}`;
+            
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function cerrarModalToggle() {
+            const modal = document.getElementById('modalToggle');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            productoIdActual = null;
+            accionActual = null;
+        }
+
+        // Cerrar modal con ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                cerrarModalToggle();
+            }
+        });
+
+        // Cerrar modal al hacer clic fuera de la card
+        document.addEventListener('click', function(e) {
+            const modal = document.getElementById('modalToggle');
+            const card = modal.querySelector('.modal-card');
+            if (e.target === modal) {
+                cerrarModalToggle();
+            }
+        });
+    </script>
+</body>
+</html>

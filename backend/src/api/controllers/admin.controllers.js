@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import userModels from "../models/user.models.js";
 import productModels from "../models/producto.models.js";
+import ventaModels from "../models/venta.models.js";
 
 /*
 - endpoint para cargar en formato HTML el login de usuario
@@ -112,34 +113,57 @@ export const postRegister = async (req, res) => {
         });
     }
 };
+
+
+export const getHistorialVentas = async (req, res) => {
+    try {
+        const ventas = await ventaModels.obtenerVentas();
+        res.render("historial-ventas", { ventas });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error al cargar el historial");
+    }
+};
+
 /*
 endpoint TEMPORAL para mostrar el dashboard
 */
 export const getDashboard = async (req, res) => {
-    try{
-        const productos = await productModels.getProductosDashboard();
-
-        // Armamos un HTML básico
-        let html = "<h1>Dashboard Temporal (Axel & Saulo)</h1>";
-        html += "<p><a href='/admin/productos/nuevo'>+ Crear Nuevo Producto</a></p>";
-        html += "<ul>";
+    try {
+        // Obtener productos agrupados por categoría
+        const productosAgrupados = await productModels.getProductosAgrupados();
         
-        // Iteramos los productos para armar la lista
-        productos.forEach(prod => {
-            html += `<li>
-                <strong>${prod.nombre}</strong> - $${prod.precio} 
-                | <a href="/admin/productos/editar/${prod.id}">Editar</a>
-            </li>`;
-            //acá construimos la URL para el getEditarProducto
+        // Obtener estadísticas básicas
+        const totalProductos = Object.values(productosAgrupados).reduce(
+            (sum, prods) => sum + prods.length, 0
+        );
+        
+        // Contar activos e inactivos
+        let activos = 0;
+        let inactivos = 0;
+        Object.values(productosAgrupados).forEach(prods => {
+            prods.forEach(p => {
+                if (p.activo === 1 || p.activo === true) {
+                    activos++;
+                } else {
+                    inactivos++;
+                }
+            });
         });
         
-        html += "</ul>";
+        // Renderizar el dashboard con los datos
+        res.render("dashboard", {
+            productosAgrupados,
+            stats: {
+                total: totalProductos,
+                activos,
+                inactivos
+            },
+            usuario: req.session.usuario
+        });
         
-        // Respondemos al cliente con el HTML armado
-        res.send(html);
-
-    }catch(error){
-        console.error("Error en dashboard temporal:", error);
+    } catch (error) {
+        console.error("Error en dashboard:", error);
         res.status(500).send("Error en el servidor al cargar el dashboard");
     }
 };
@@ -154,6 +178,7 @@ export const getNuevoProducto = (req, res) => {
 /*
 - Endpoint para interceptar cuando enviamos un archivo al servidor.
 */
+// controllers/admin.controllers.js
 export const postNuevoProducto = async (req, res) => {
     try {
         const { nombre, descripcion, precio, categoria } = req.body;
@@ -164,7 +189,10 @@ export const postNuevoProducto = async (req, res) => {
         res.redirect("/admin/dashboard");
     } catch (error) {
         console.error("Error al crear producto nuevo:", error);
-        res.status(500).send("Error interno al crear el producto");
+        res.status(500).render("formulario-producto", {
+            producto: { nombre, descripcion, precio, categoria },
+            error: "Error interno al crear el producto. Intentá de nuevo."
+        });
     }
 };
 
@@ -200,5 +228,17 @@ export const postEditarProducto = async (req, res) => {
     } catch (error) {
         console.error("Error al actualizar el producto:", error);
         res.status(500).send("Error interno al actualizar el producto");
+    }
+};
+
+
+export const toggleProducto = async (req, res) => {
+    const id = req.id;
+    try {
+        await productModels.estadoProducto(id);
+        res.redirect("/admin/dashboard");
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error al cambiar estado del producto");
     }
 };

@@ -32,6 +32,67 @@ const registrarVenta = async ({ cliente, total, items }) => {
     }
 };
 
+const obtenerVentas = async () => {
+    try {
+        // 1. Obtener todas las ventas
+        const [ventas] = await connection.query(
+            "SELECT id, nombreCliente, precioTotal, fecha FROM ventas ORDER BY fecha DESC"
+        );
+
+        // 2. Por cada venta, obtener sus productos
+        for (const venta of ventas) {
+            const [productos] = await connection.query(
+                `SELECT vp.cantidad, vp.precioUnitario, p.nombre as productoNombre
+                 FROM ventas_productos vp
+                 JOIN productos p ON vp.producto_id = p.id
+                 WHERE vp.venta_id = ?`,
+                [venta.id]
+            );
+            venta.productos = productos;
+        }
+
+        return ventas;
+
+    } catch (error) {
+        console.error("Error al obtener ventas:", error);
+        throw error;
+    }
+};
+
+const obtenerVentaById = async (id) => {
+    try {
+        // 1. Obtener la venta
+        const [ventas] = await connection.query(
+            "SELECT id, nombreCliente, precioTotal, fecha FROM ventas WHERE id = ?",
+            [id]
+        );
+
+        if (ventas.length === 0) {
+            return null;
+        }
+
+        const venta = ventas[0];
+
+        // 2. Obtener los productos de esa venta
+        const [productos] = await connection.query(
+            `SELECT vp.cantidad, vp.precioUnitario, p.nombre as productoNombre
+             FROM ventas_productos vp
+             JOIN productos p ON vp.producto_id = p.id
+             WHERE vp.venta_id = ?`,
+            [id]
+        );
+
+        venta.productos = productos;
+        return venta;
+
+    } catch (error) {
+        console.error("Error al obtener venta por ID:", error);
+        throw error;
+    }
+};
+
 export default {
-    registrarVenta
+    registrarVenta,
+    obtenerVentas,
+    obtenerVentaById
 };

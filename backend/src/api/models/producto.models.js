@@ -20,12 +20,26 @@ export const getProductosId = async (id) =>{
     return rows;
 };
 
-export const getProductosDashboard = async () =>{
-    const sql = "SELECT id, nombre, precio FROM productos";
-
-    const [productos] = await connection.query(sql)
-
+const getProductosDashboard = async () => {
+    const sql = "SELECT id, nombre, descripcion, precio, imagenUrl, categoria, activo FROM productos";
+    const [productos] = await connection.query(sql);
     return productos;
+};
+
+const getProductosAgrupados = async () => {
+    const sql = "SELECT id, nombre, descripcion, precio, imagenUrl, categoria, activo FROM productos ORDER BY categoria, nombre";
+    const [productos] = await connection.query(sql);
+    
+    // Agrupar por categoría
+    const agrupados = {};
+    productos.forEach(prod => {
+        if (!agrupados[prod.categoria]) {
+            agrupados[prod.categoria] = [];
+        }
+        agrupados[prod.categoria].push(prod);
+    });
+    
+    return agrupados;
 };
 
 export const postNuevoProducto = async ({nombre, descripcion, precio, imageUrl, categoria}) =>{
@@ -57,12 +71,19 @@ export const actualizarProducto = async ({ id, nombre, descripcion, precio, cate
     }
 };
 
+const estadoProducto = async (id) => {
+    const sql = "UPDATE productos SET activo = NOT activo WHERE id = ?";
+    await connection.query(sql, [id]);
+};
+
 
 export default {
     getProductosActivos,
     getProductosId,
     getProductosDashboard,
+    getProductosAgrupados,
     postNuevoProducto,
     getProductoIdAdmin,
-    actualizarProducto
+    actualizarProducto,
+    estadoProducto
 }

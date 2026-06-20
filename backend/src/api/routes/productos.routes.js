@@ -2,7 +2,7 @@ import express from "express";
 import { upload } from "../middlewares/upload.js";
 
 import { getProductos, getProdDescripcion } from "../controllers/productos.controllers.js";
-import { validateID } from "../middlewares/validateId.js";
+import { validateID } from "../middlewares/validators.js";
 
 const router = express.Router();
 
