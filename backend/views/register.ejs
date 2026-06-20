@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Admin - Autoservicio</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-container">
+            <span class="logo">👕 UrbanStyle</span>
+            <span class="app-name">Autoservicio Kiosko</span>
+            <nav class="nav">
+                <a href="/">Ir al Kiosco</a>
+                <a href="/admin/login">Iniciar Sesión</a>
+            </nav>
+            <span class="student-names">Axel Castellano & Saulo Fernández</span>
+        </div>
+    </header>
+
+    <main class="login-container">
+        <div class="login-card">
+            <h1>Registrar Administrador</h1>
+            <p class="subtitle">Crear usuario para el panel de administración</p>
+
+            <% if (typeof error !== 'undefined' && error) { %>
+                <div class="alert alert-error">
+                    <p><%= error %></p>
+                </div>
+            <% } %>
+
+            <% if (typeof success !== 'undefined' && success) { %>
+                <div class="alert alert-success">
+                    <p><%= success %></p>
+                </div>
+            <% } %>
+
+            <form action="/admin/register" method="POST" class="login-form">
+                <div class="form-group">
+                    <label for="nombre">Nombre completo</label>
+                    <input type="text" id="nombre" name="nombre" placeholder="Juan Pérez"
+                        value="<%= typeof nombre !== 'undefined' ? nombre : '' %>" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="correo">Correo Electrónico</label>
+                    <input type="email" id="correo" name="correo" placeholder="admin@ejemplo.com"
+                        value="<%= typeof correo !== 'undefined' ? correo : '' %>" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="contrasena">Contraseña</label>
+                    <input type="password" id="contrasena" name="contrasena" placeholder="••••••••" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmar_contrasena">Confirmar Contraseña</label>
+                    <input type="password" id="confirmar_contrasena" name="confirmar_contrasena" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Registrarse</button>
+            </form>
+
+            <div class="divider">o bien</div>
+
+            <p class="text-center">
+                ¿Ya tenés cuenta? <a href="/admin/login">Iniciar sesión</a>
+            </p>
+        </div>
+    </main>
+</body>
+</html>

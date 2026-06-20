@@ -8,6 +8,13 @@ const getUsuarioEmail = async (correo) => {
     return rows[0];
 }
 
+const createUsuario = async ({ nombre, correo, contrasena, rol = 'admin' }) => {
+    const sql = "INSERT INTO usuarios (nombre, correo, contrasena, rol) VALUES (?, ?, ?, ?)";
+    const [result] = await connection.query(sql, [nombre, correo, contrasena, rol]);
+    return { id: result.insertId, nombre, correo, rol };
+};
+
 export default{
-    getUsuarioEmail
+    getUsuarioEmail,
+    createUsuario
 }

@@ -1,14 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
 
 :root {
-    --bg-main: #0B0F19;         /* Fondo azul noche ultra oscuro */
-    --bg-card: #111827;         /* Fondo gris oscuro para las tarjetas */
-    --text-primary: #F3F4F6;    /* Texto principal blanco hueso */
-    --text-secondary: #9CA3AF;  /* Texto secundario gris claro */
-    --primary-color: #10B981;   /* Color verde esmeralda para destacar */
-    --primary-hover: #059669;   /* Tono más oscuro de esmeralda al pasar el mouse */
-    --border-color: #1F2937;    /* Borde sutil gris oscuro */
-    --input-focus: #3B82F6;     /* Borde azul cuando hacés clic en un input */
+    --bg-main: #0B0F19;
+    /* Fondo azul noche ultra oscuro */
+    --bg-card: #111827;
+    /* Fondo gris oscuro para las tarjetas */
+    --text-primary: #F3F4F6;
+    /* Texto principal blanco hueso */
+    --text-secondary: #9CA3AF;
+    /* Texto secundario gris claro */
+    --primary-color: #10B981;
+    /* Color verde esmeralda para destacar */
+    --primary-hover: #059669;
+    /* Tono más oscuro de esmeralda al pasar el mouse */
+    --border-color: #1F2937;
+    /* Borde sutil gris oscuro */
+    --input-focus: #3B82F6;
+    /* Borde azul cuando hacés clic en un input */
     --font-family: 'Outfit', sans-serif;
 }
 
@@ -100,8 +108,8 @@ body {
     padding: 40px;
     width: 100%;
     max-width: 420px;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 
-                0 8px 10px -6px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3),
+        0 8px 10px -6px rgba(0, 0, 0, 0.3);
     text-align: center;
 }
 
@@ -167,7 +175,7 @@ body {
 }
 
 .btn:active {
-    transform: scale(0.98); 
+    transform: scale(0.98);
 }
 
 .btn-primary {
@@ -199,12 +207,62 @@ body {
     align-items: center;
 }
 
-.divider::before, .divider::after {
+.divider::before,
+.divider::after {
     content: "";
     flex: 1;
     height: 1px;
     background-color: var(--border-color);
 }
 
-.divider::before { margin-right: 10px; }
-.divider::after { margin-left: 10px; }
+.divider::before {
+    margin-right: 10px;
+}
+
+.divider::after {
+    margin-left: 10px;
+}
+
+.alert {
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+.alert-error {
+    background-color: #fee2e2;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+}
+
+.alert-success {
+    background-color: #dcfce7;
+    border: 1px solid #bbf7d0;
+    color: #16a34a;
+}
+
+.text-center {
+    text-align: center;
+    margin: 10px 0;
+}
+
+.link-register {
+    color: #4f46e5;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.link-register:hover {
+    text-decoration: underline;
+    color: #4338ca;
+}
+
+.text-center a {
+    color: #4f46e5;
+    text-decoration: none;
+}
+
+.text-center a:hover {
+    text-decoration: underline;
+}

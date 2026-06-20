@@ -41,6 +41,77 @@ export const postLogin = async (req, res) => {
     }
 };
 
+
+export const getRegister = (req, res) => {
+    res.render("register", {
+        error: null,
+        success: null,
+        nombre: '',
+        correo: ''
+    });
+};
+
+export const postRegister = async (req, res) => {
+    const { nombre, correo, contrasena, confirmar_contrasena } = req.body;
+
+    try {
+        // 1. Validar que las contraseñas coincidan
+        if (contrasena !== confirmar_contrasena) {
+            return res.render("register", { 
+                error: "Las contraseñas no coinciden",
+                nombre,
+                correo
+            });
+        }
+
+        // 2. Validar que la contraseña tenga mínimo 6 caracteres
+        if (contrasena.length < 6) {
+            return res.render("register", { 
+                error: "La contraseña debe tener al menos 6 caracteres",
+                nombre,
+                correo
+            });
+        }
+
+        // 3. Verificar si el email ya existe
+        const usuarioExistente = await userModels.getUsuarioEmail(correo);
+        if (usuarioExistente) {
+            return res.render("register", { 
+                error: "El correo electrónico ya está registrado",
+                nombre,
+                correo
+            });
+        }
+
+        // 4. Hashear la contraseña
+        const saltRounds = 10;
+        const contrasenaHash = await bcrypt.hash(contrasena, saltRounds);
+
+        // 5. Guardar el usuario en la base de datos
+        // NOTA: Necesitas agregar esta función en user.models.js
+        const nuevoUsuario = await userModels.createUsuario({
+            nombre,
+            correo,
+            contrasena: contrasenaHash,
+            // Por defecto, el primer usuario registrado es admin
+            // Podrías agregar un campo "rol" en la tabla usuarios
+            rol: 'admin'
+        });
+
+        // 6. Redirigir al login con mensaje de éxito
+        res.render("login", { 
+            success: "¡Usuario registrado exitosamente! Ahora podés iniciar sesión."
+        });
+
+    } catch (error) {
+        console.error("Error en registro:", error);
+        res.render("register", { 
+            error: "Error interno del servidor. Intentá de nuevo más tarde.",
+            nombre,
+            correo
+        });
+    }
+};
 /*
 endpoint TEMPORAL para mostrar el dashboard
 */

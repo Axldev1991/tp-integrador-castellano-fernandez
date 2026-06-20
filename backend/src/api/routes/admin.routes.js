@@ -2,6 +2,8 @@ import express from "express";
 import { 
     getLogin, 
     postLogin, 
+    getRegister,
+    postRegister,
     getNuevoProducto, 
     postNuevoProducto, 
     getEditarProducto, 
@@ -16,6 +18,10 @@ const router = express.Router();
 // Ruta de Login
 router.get("/login", getLogin);
 router.post("/login", postLogin);
+
+// Ruta de Register
+router.get("/register", getRegister);
+router.post("/register", postRegister);
 
 // Ruta de Dashboard
 router.get("/dashboard", getDashboard);

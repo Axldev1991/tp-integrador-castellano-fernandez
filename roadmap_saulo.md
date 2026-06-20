@@ -6,7 +6,7 @@ Este documento detalla las tareas asignadas a Saulo para el TP Integrador "Autos
 
 ## 🗄️ Etapa 2: API JSON (Backend)
 - [ ] **2.3. Endpoints API JSON (Respuestas en formato JSON)**:
-  - [ ] `POST /api/admin/setup` (registro de usuario admin encriptado).
+  - [x] `POST /api/admin/setup` (registro de usuario admin encriptado).
   - [x] `GET /api/productos` (catálogo paginado de productos activos) - *Implementado por Axel*.
   - [x] `GET /api/productos/:id` (detalle del producto) - *Implementado por Axel*.
   - [x] `POST /api/ventas` (registro de una venta en base de datos) - *Implementado por Axel*.
