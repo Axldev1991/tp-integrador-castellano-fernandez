@@ -59,7 +59,12 @@ Este documento detalla las tareas asignadas a Axel para el TP Integrador "Autose
   - *Lugares a modificar en el Backend:*
     - [apiController.js:L20](file:///home/axel/Escritorio/UTN/programacion3-tpIntegrador/backend/src/api/controllers/apiController.js#L20) en `getProductos` (cambiar `res.json(productosMapeados)` por `{ payload: productosMapeados, total: productosMapeados.length }`).
   - *Lugares a modificar en el Frontend (para no romper la UI al cambiar la API):*
-    - En los archivos JS del frontend donde se haga `fetch` a `/api/productos` (por ejemplo, en el catálogo para iterar sobre `data.payload` en vez de `data` directamente).
+    - En los archivos JS del frontend donde se haga `fetch` a `/api/productos` (por ejemplo, en el catálogo para iterar sobre `data.payload` en vez de `data` directly).
+
+## 📚 Alineación con la Bitácora del Profesor (Pendientes)
+- [x] **B.1. Refactorización del Ticket a jsPDF:** Reemplazar la biblioteca `html2pdf` por `jsPDF` nativo usando el CDN oficial y dibujando el ticket mediante coordenadas (`doc.text`) para seguir exactamente la lección del profesor.
+- [ ] **B.2. Validación Teórica de Conceptos:** Repasar y validar en el código el uso de `early exits` (retornos tempranos), `express.json()`, `FormData` y respuestas HTTP consistentes.
+
 
 
 
