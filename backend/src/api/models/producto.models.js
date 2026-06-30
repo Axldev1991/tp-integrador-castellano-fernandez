@@ -34,6 +34,39 @@ const getProductosDashboard = async () => {
     return productos;
 };
 
+
+const getProductosDashboardPaginated = async (page = 1, limit = 10) => {
+    const offset = (page - 1) * limit;
+    
+    // Obtener productos con paginación
+    const [productos] = await connection.query(
+        "SELECT id, nombre, descripcion, precio, imagenUrl, categoria, activo FROM productos ORDER BY categoria, nombre LIMIT ? OFFSET ?",
+        [limit, offset]
+    );
+    
+    // Obtener el total de productos
+    const [total] = await connection.query(
+        "SELECT COUNT(*) as total FROM productos"
+    );
+    
+    // Agrupar por categoría
+    const agrupados = {};
+    productos.forEach(prod => {
+        if (!agrupados[prod.categoria]) {
+            agrupados[prod.categoria] = [];
+        }
+        agrupados[prod.categoria].push(prod);
+    });
+    
+    return {
+        productos: agrupados,
+        total: total[0].total,
+        page: page,
+        limit: limit,
+        totalPages: Math.ceil(total[0].total / limit)
+    };
+};
+
 const getProductosAgrupados = async () => {
     const sql = "SELECT id, nombre, descripcion, precio, imagenUrl, categoria, activo FROM productos ORDER BY categoria, nombre";
     const [productos] = await connection.query(sql);
@@ -103,5 +136,6 @@ export default {
     estadoProducto,
     contarProductosActivos,
     actualizarProducto,
-    getTopProductos
+    getTopProductos,
+    getProductosDashboardPaginated
 }

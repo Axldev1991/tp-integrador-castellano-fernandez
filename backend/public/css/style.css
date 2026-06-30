@@ -873,9 +873,68 @@ body {
     background: var(--primary-hover);
 }
 
-/* ============================================
-   📱 RESPONSIVE
-   ============================================ */
+/* Paginacion Dashboard */
+.paginacion-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 20px;
+    padding: 15px 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+}
+
+.paginacion-info {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.paginacion-info strong {
+    color: var(--text-primary);
+}
+
+.paginacion-botones {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.paginacion-botones a {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.paginacion-botones a:hover {
+    background: var(--border-color);
+    color: var(--text-primary);
+}
+
+.paginacion-botones a.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.paginacion-botones a.active:hover {
+    background: var(--primary-hover);
+}
+
+.paginacion-botones a.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* 📱 RESPONSIVE */
 @media (max-width: 768px) {
     .header-container {
         flex-direction: column;
@@ -988,9 +1047,7 @@ body {
     }
 }
 
-/* ============================================
-   🟢 MODAL DE CONFIRMACIÓN
-   ============================================ */
+/* MODAL DE CONFIRMACION */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -1113,9 +1170,7 @@ body {
     background: #dc2626;
 }
 
-/* ============================================ */
-/* 📊 ESTADÍSTICAS Y TOPS DEL DASHBOARD         */
-/* ============================================ */
+/* ESTADISTICAS Y TOPS DEL DASH */
 .stats-grid-dashboard {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -1178,3 +1233,5 @@ body {
     font-weight: 600;
     color: var(--text-primary);
 }
+
+

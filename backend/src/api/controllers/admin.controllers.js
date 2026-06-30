@@ -122,7 +122,10 @@ export const postRegister = async (req, res) => {
 export const getHistorialVentas = async (req, res) => {
     try {
         const ventas = await ventaModels.obtenerVentas();
-        res.render("historial-ventas", { ventas });
+        res.render("historial-ventas", { 
+            ventas,
+            usuario: req.session.usuario
+         });
     } catch (error) {
         console.error(error);
         res.status(500).send("Error al cargar el historial");
@@ -134,46 +137,49 @@ endpoint para mostrar el dashboard
 */
 export const getDashboard = async (req, res) => {
     try {
-        // Obtener productos agrupados por categoría
-        const productosAgrupados = await productModels.getProductosAgrupados();
+        // Obtener página de la query string (ej: ?page=2)
+        const page = parseInt(req.query.page) || 1;
+        const limit = 10; // Productos por página
         
-        // Obtener estadísticas básicas
-        const totalProductos = Object.values(productosAgrupados).reduce(
-            (sum, prods) => sum + prods.length, 0
-        );
+        // ✅ Obtener productos PAGINADOS
+        const result = await productModels.getProductosDashboardPaginated(page, limit);
         
-        // Contar activos e inactivos
+        // Calcular estadísticas totales (sin paginación)
+        const productosTotales = await productModels.getProductosDashboard();
         let activos = 0;
         let inactivos = 0;
-        Object.values(productosAgrupados).forEach(prods => {
-            prods.forEach(p => {
-                if (p.activo === 1 || p.activo === true) {
-                    activos++;
-                } else {
-                    inactivos++;
-                }
-            });
+        productosTotales.forEach(p => {
+            if (p.activo === 1 || p.activo === true) {
+                activos++;
+            } else {
+                inactivos++;
+            }
         });
 
+        // Obtener datos para las estadísticas (top productos, ventas, ingresos)
         const topProductos = await productModels.getTopProductos();
         const topVentas = await ventaModels.getTopVentas();
         const ingresos = await ventaModels.getTotalIngresos();
 
-        let total = 0;
-        if(ingresos[0]){
-            total = ingresos[0].total;
+        let totalIngresos = 0;
+        if (ingresos && ingresos[0]) {
+            totalIngresos = ingresos[0].total;
         }
 
-
-        
         // Renderizar el dashboard con los datos
         res.render("dashboard", {
-            productosAgrupados,
+            productosAgrupados: result.productos, // ← PRODUCTOS PAGINADOS
             stats: {
-                total: totalProductos,
+                total: result.total, // ← TOTAL REAL (sin paginación)
                 activos,
                 inactivos,
-                totalIngresos: total
+                totalIngresos
+            },
+            paginacion: {
+                currentPage: result.page,
+                totalPages: result.totalPages,
+                limit: result.limit,
+                total: result.total
             },
             topProductos,
             topVentas,
@@ -190,7 +196,12 @@ export const getDashboard = async (req, res) => {
 - Endpoint para mostrar el formulario de carga de un nuevo producto
 */
 export const getNuevoProducto = (req, res) => {
-    res.render("formulario-producto", { producto: null });
+    const page = req.query.page || 1;  // captura pagina si viene
+    res.render("formulario-producto", { 
+        producto: null,
+        page: page,
+        usuario: req.session.usuario
+    });
 };
 
 /*
@@ -217,14 +228,19 @@ export const postNuevoProducto = async (req, res) => {
 // Agregamos el GET de editar producto para traernos todos los datos de la DB del producto a editar
 export const getEditarProducto = async (req, res) => {
     const id = req.id;
+    // ✅ Obtener la página de la query string
+    const page = req.query.page || 1;
+    
     try {
         const producto = await productModels.getProductoIdAdmin(id);
         if (!producto) {
-            // Si no existe, redirigimos
-            return res.redirect("/admin/dashboard");
+            return res.redirect(`/admin/dashboard?page=${page}`);
         }
-        // Renderizamos la misma plantilla de producto nuevo, con los campos completos
-        res.render("formulario-producto", { producto });
+        // ✅ Pasar la página al formulario
+        res.render("formulario-producto", { 
+            producto, 
+            page: page 
+        });
     } catch (error) {
         console.error("Error al obtener el producto para editar:", error);
         res.status(500).send("Error interno del servidor");
@@ -238,11 +254,13 @@ export const postEditarProducto = async (req, res) => {
     const id = req.id;
     const { nombre, descripcion, precio, categoria } = req.body;
     const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
+    // ✅ CORREGIDO: page viene de req.body (no de req.query)
+    const page = req.body.page || 1;
 
     try {
         await productModels.actualizarProducto({nombre, descripcion, precio, imageUrl, categoria, id});
-        
-        res.redirect("/admin/dashboard");
+        // ✅ Redirigir a la misma página
+        res.redirect(`/admin/dashboard?page=${page}`);
     } catch (error) {
         console.error("Error al actualizar el producto:", error);
         res.status(500).send("Error interno al actualizar el producto");
@@ -252,9 +270,13 @@ export const postEditarProducto = async (req, res) => {
 
 export const toggleProducto = async (req, res) => {
     const id = req.id;
+    // ✅ Obtener la página de la query string
+    const page = req.query.page || 1;
+    
     try {
         await productModels.estadoProducto(id);
-        res.redirect("/admin/dashboard");
+        // ✅ Redirigir a la misma página
+        res.redirect(`/admin/dashboard?page=${page}`);
     } catch (error) {
         console.error(error);
         res.status(500).send("Error al cambiar estado del producto");
