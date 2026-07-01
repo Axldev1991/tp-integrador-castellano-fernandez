@@ -140,9 +140,31 @@ export const getDashboard = async (req, res) => {
         // Obtener página de la query string (ej: ?page=2)
         const page = parseInt(req.query.page) || 1;
         const limit = 10; // Productos por página
+        const searchId = req.query.searchId ? parseInt(req.query.searchId) : null; // ✅ BUSCADOR POR ID
         
-        // ✅ Obtener productos PAGINADOS
-        const result = await productModels.getProductosDashboardPaginated(page, limit);
+        let result;
+        let productosFiltrados = {};
+        
+        if (searchId) {
+            // ✅ Buscar producto por ID específico
+            const producto = await productModels.getProductoIdAdmin(searchId);
+            
+            if (producto) {
+                // Agrupar el producto encontrado en su categoría
+                productosFiltrados[producto.categoria] = [producto];
+            }
+            
+            result = {
+                productos: productosFiltrados,
+                total: Object.values(productosFiltrados).reduce((sum, prods) => sum + prods.length, 0),
+                page: 1,
+                limit: limit,
+                totalPages: 1
+            };
+        } else {
+            // ✅ Obtener productos PAGINADOS (sin búsqueda)
+            result = await productModels.getProductosDashboardPaginated(page, limit);
+        }
         
         // Calcular estadísticas totales (sin paginación)
         const productosTotales = await productModels.getProductosDashboard();
@@ -168,9 +190,9 @@ export const getDashboard = async (req, res) => {
 
         // Renderizar el dashboard con los datos
         res.render("dashboard", {
-            productosAgrupados: result.productos, // ← PRODUCTOS PAGINADOS
+            productosAgrupados: result.productos,
             stats: {
-                total: result.total, // ← TOTAL REAL (sin paginación)
+                total: result.total,
                 activos,
                 inactivos,
                 totalIngresos
@@ -181,6 +203,7 @@ export const getDashboard = async (req, res) => {
                 limit: result.limit,
                 total: result.total
             },
+            searchId: searchId, // ✅ Pasar el ID buscado al EJS
             topProductos,
             topVentas,
             usuario: req.session.usuario

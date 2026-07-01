@@ -97,7 +97,7 @@ body {
 }
 
 /* ============================================
-   🔐 LOGIN Y REGISTER (autenticación)
+   🔐 LOGIN Y REGISTER
    ============================================ */
 .login-container {
     flex: 1;
@@ -278,15 +278,6 @@ body {
     color: #4338ca;
 }
 
-.text-center a {
-    color: #4f46e5;
-    text-decoration: none;
-}
-
-.text-center a:hover {
-    text-decoration: underline;
-}
-
 /* ============================================
    📊 DASHBOARD
    ============================================ */
@@ -310,16 +301,7 @@ body {
     color: var(--text-primary);
 }
 
-.dashboard-header .user-info {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-}
-
-.dashboard-header .user-info strong {
-    color: var(--text-primary);
-}
-
-/* --- Estadísticas Dashboard --- */
+/* --- Estadísticas --- */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -356,17 +338,19 @@ body {
     border-left-color: #ef4444;
 }
 
-/* --- Botón nuevo producto --- */
+/* --- Botones Dashboard --- */
 .btn-nuevo-producto {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     background: var(--primary-color);
     color: white;
-    padding: 10px 24px;
+    padding: 0 24px;
+    height: 40px;
     border-radius: 8px;
     text-decoration: none;
     font-weight: 600;
     transition: background 0.2s ease;
-    margin-bottom: 25px;
 }
 
 .btn-nuevo-producto:hover {
@@ -411,7 +395,6 @@ body {
     background: rgba(255, 255, 255, 0.02);
 }
 
-/* --- Categoría agrupada --- */
 .categoria-header {
     background: rgba(255, 255, 255, 0.04);
     font-weight: 700;
@@ -509,6 +492,201 @@ body {
     margin: 0;
 }
 
+/* --- Buscador --- */
+.dashboard-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.search-form {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.search-form input[type="number"] {
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-main);
+    color: var(--text-primary);
+    width: 150px;
+    font-size: 0.9rem;
+    height: 40px;
+    transition: border-color 0.2s ease;
+}
+
+.search-form input[type="number"]:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.search-form .btn-buscar {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: none;
+    background: var(--primary-color);
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+    height: 40px;
+    transition: background 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-form .btn-buscar:hover {
+    background: var(--primary-hover);
+}
+
+.search-form .btn-limpiar-busqueda {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    text-decoration: none;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.search-form .btn-limpiar-busqueda:hover {
+    background: var(--border-color);
+    color: var(--text-primary);
+}
+
+/* --- Paginación --- */
+.paginacion-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 20px;
+    padding: 15px 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+}
+
+.paginacion-info {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.paginacion-info strong {
+    color: var(--text-primary);
+}
+
+.paginacion-botones {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.paginacion-botones a {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.paginacion-botones a:hover {
+    background: var(--border-color);
+    color: var(--text-primary);
+}
+
+.paginacion-botones a.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.paginacion-botones a.active:hover {
+    background: var(--primary-hover);
+}
+
+.paginacion-botones a.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* --- Tops --- */
+.stats-grid-dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.tops-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.top-stat-card {
+    padding: 20px;
+    text-align: left;
+    background: var(--bg-card);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.top-stat-card h3 {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.top-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.top-list-item {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+}
+
+.top-list-item:last-child {
+    border-bottom: none;
+}
+
+.top-list-item .rank {
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-right: 5px;
+}
+
+.top-list-item .meta {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.top-list-item .value {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
 /* ============================================
    📊 HISTORIAL DE VENTAS
    ============================================ */
@@ -573,22 +751,6 @@ body {
     color: var(--text-primary);
 }
 
-.pagina-btn {
-    padding: 8px 16px;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-    background: var(--bg-card);
-    color: var(--text-primary);
-    cursor: pointer;
-    font-size: 14px;
-    transition: all 0.2s ease;
-}
-
-.pagina-btn:hover {
-    background: var(--border-color);
-}
-
-/* --- Estadísticas Ventas --- */
 .ventas-stats {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -612,7 +774,6 @@ body {
     border-left-color: #ef4444;
 }
 
-/* --- Filtros --- */
 .ventas-filtros {
     display: flex;
     flex-wrap: wrap;
@@ -659,14 +820,12 @@ body {
     background: var(--primary-hover);
 }
 
-/* --- Grid de ventas --- */
 .ventas-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 20px;
 }
 
-/* --- Tarjeta de venta --- */
 .venta-card {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
@@ -681,7 +840,6 @@ body {
     box-shadow: var(--shadow-hover);
 }
 
-/* --- Header de la venta --- */
 .venta-header {
     background: rgba(255, 255, 255, 0.03);
     padding: 14px 22px;
@@ -716,7 +874,6 @@ body {
     margin-left: 8px;
 }
 
-/* --- Cuerpo de la venta --- */
 .venta-body {
     padding: 18px 22px;
     display: grid;
@@ -834,220 +991,9 @@ body {
     font-size: 15px;
 }
 
-/* --- Paginación --- */
-.pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    margin-top: 30px;
-    padding-top: 20px;
-    border-top: 1px solid var(--border-color);
-}
-
-.pagination button,
-.pagination a {
-    padding: 8px 16px;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-    background: var(--bg-card);
-    color: var(--text-primary);
-    cursor: pointer;
-    font-size: 14px;
-    transition: all 0.2s ease;
-    text-decoration: none;
-}
-
-.pagination button:hover,
-.pagination a:hover {
-    background: var(--border-color);
-}
-
-.pagination .active {
-    background: var(--primary-color);
-    color: white;
-    border-color: var(--primary-color);
-}
-
-.pagination .active:hover {
-    background: var(--primary-hover);
-}
-
-/* Paginacion Dashboard */
-.paginacion-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-top: 20px;
-    padding: 15px 20px;
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-}
-
-.paginacion-info {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-}
-
-.paginacion-info strong {
-    color: var(--text-primary);
-}
-
-.paginacion-botones {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-}
-
-.paginacion-botones a {
-    display: inline-block;
-    padding: 6px 14px;
-    border-radius: 6px;
-    border: 1px solid var(--border-color);
-    color: var(--text-secondary);
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: all 0.2s ease;
-}
-
-.paginacion-botones a:hover {
-    background: var(--border-color);
-    color: var(--text-primary);
-}
-
-.paginacion-botones a.active {
-    background: var(--primary-color);
-    color: white;
-    border-color: var(--primary-color);
-}
-
-.paginacion-botones a.active:hover {
-    background: var(--primary-hover);
-}
-
-.paginacion-botones a.disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-    pointer-events: none;
-}
-
-/* 📱 RESPONSIVE */
-@media (max-width: 768px) {
-    .header-container {
-        flex-direction: column;
-        text-align: center;
-        gap: 6px;
-    }
-
-    .nav a {
-        font-size: 0.8rem;
-        padding: 4px 8px;
-    }
-
-    .login-card {
-        padding: 30px 20px;
-    }
-
-    .dashboard-header {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .container h1 {
-        font-size: 1.5rem;
-    }
-
-    .ventas-header-actions {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .stats-grid,
-    .ventas-stats {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-    }
-
-    .stat-card .stat-number {
-        font-size: 22px;
-    }
-
-    .tabla-container {
-        overflow-x: auto;
-    }
-
-    .tabla-container table {
-        min-width: 600px;
-    }
-
-    .venta-body {
-        grid-template-columns: 1fr;
-        gap: 12px;
-    }
-
-    .venta-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 4px;
-    }
-
-    .venta-total {
-        text-align: left;
-        align-items: flex-start;
-    }
-
-    .venta-total .value {
-        font-size: 18px;
-    }
-
-    .ventas-filtros {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .ventas-filtros input,
-    .ventas-filtros select,
-    .ventas-filtros .btn-filtrar {
-        width: 100%;
-    }
-
-    .acciones {
-        flex-direction: column;
-        gap: 4px;
-    }
-}
-
-@media (max-width: 480px) {
-
-    .stats-grid,
-    .ventas-stats {
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-    }
-
-    .stat-card {
-        padding: 12px;
-    }
-
-    .stat-card .stat-number {
-        font-size: 18px;
-    }
-
-    .venta-body {
-        padding: 14px 16px;
-    }
-
-    .venta-productos ul li {
-        font-size: 13px;
-        flex-wrap: wrap;
-        gap: 4px;
-    }
-}
-
-/* MODAL DE CONFIRMACION */
+/* ============================================
+   🟢 MODAL DE CONFIRMACIÓN
+   ============================================ */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -1078,7 +1024,6 @@ body {
         opacity: 0;
         transform: scale(0.9) translateY(-20px);
     }
-
     to {
         opacity: 1;
         transform: scale(1) translateY(0);
@@ -1170,68 +1115,129 @@ body {
     background: #dc2626;
 }
 
-/* ESTADISTICAS Y TOPS DEL DASH */
-.stats-grid-dashboard {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    margin-bottom: 30px;
+/* ============================================
+   📱 RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 6px;
+    }
+
+    .nav a {
+        font-size: 0.8rem;
+        padding: 4px 8px;
+    }
+
+    .login-card {
+        padding: 30px 20px;
+    }
+
+    .dashboard-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .container h1 {
+        font-size: 1.5rem;
+    }
+
+    .ventas-header-actions {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .stats-grid,
+    .ventas-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .stat-card .stat-number {
+        font-size: 22px;
+    }
+
+    .tabla-container {
+        overflow-x: auto;
+    }
+
+    .tabla-container table {
+        min-width: 600px;
+    }
+
+    .venta-body {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .venta-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+
+    .venta-total {
+        text-align: left;
+        align-items: flex-start;
+    }
+
+    .venta-total .value {
+        font-size: 18px;
+    }
+
+    .ventas-filtros {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .ventas-filtros input,
+    .ventas-filtros select,
+    .ventas-filtros .btn-filtrar {
+        width: 100%;
+    }
+
+    .acciones {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .dashboard-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-form {
+        flex-wrap: wrap;
+    }
+
+    .search-form input[type="number"] {
+        width: 100%;
+    }
 }
 
-.tops-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-    margin-top: 40px;
+@media (max-width: 480px) {
+    .stats-grid,
+    .ventas-stats {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .stat-card {
+        padding: 12px;
+    }
+
+    .stat-card .stat-number {
+        font-size: 18px;
+    }
+
+    .venta-body {
+        padding: 14px 16px;
+    }
+
+    .venta-productos ul li {
+        font-size: 13px;
+        flex-wrap: wrap;
+        gap: 4px;
+    }
 }
-
-.top-stat-card {
-    padding: 20px;
-    text-align: left;
-    background: var(--bg-card);
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-}
-
-.top-stat-card h3 {
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.top-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.top-list-item {
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border-color);
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.95rem;
-}
-
-.top-list-item:last-child {
-    border-bottom: none;
-}
-
-.top-list-item .rank {
-    font-weight: 600;
-    color: var(--primary-color);
-    margin-right: 5px;
-}
-
-.top-list-item .meta {
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-}
-
-.top-list-item .value {
-    font-weight: 600;
-    color: var(--text-primary);
-}
-
-
